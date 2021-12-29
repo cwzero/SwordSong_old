@@ -14,13 +14,9 @@ public class SpaceGrid extends ArrayTileGrid {
         this(dimension.width, dimension.height);
     }
 
-    private void update(int x, int y) {
-        fireUpdate(getTile(x, y), getTile(x, y), x, y);
-    }
-
     public synchronized Space getSpace(int x, int y) {
         if (getTile(x, y) == null) {
-            setTile(new Space(() -> update(x, y)), x, y);
+            setTile(new Space(), x, y);
         }
         return (Space) getTile(x, y);
     }

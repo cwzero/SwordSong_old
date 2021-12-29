@@ -1,8 +1,10 @@
 package com.liquidforte.song.grid;
 
+import com.liquidforte.song.block.Block;
 import com.liquidforte.song.event.AreaListener;
 import com.liquidforte.song.event.GridUpdateEvent;
 import com.liquidforte.song.event.GridUpdateListener;
+import com.liquidforte.song.tile.ListenTile;
 import com.liquidforte.song.tile.Tile;
 
 import javax.swing.event.EventListenerList;
@@ -22,6 +24,10 @@ public abstract class AbstractTileGrid extends KeyAdapter implements TileGrid {
     protected abstract Tile doGetTile(int x, int y);
 
     protected abstract Tile doSetTile(Tile tile, int x, int y);
+
+    public boolean isSolid(int x, int y) {
+        return !(getTile(x, y) instanceof Block b && !b.isSolid());
+    }
 
     @Override
     public Tile getTile(int x, int y) {
@@ -55,6 +61,11 @@ public abstract class AbstractTileGrid extends KeyAdapter implements TileGrid {
             }
 
             Tile result = doSetTile(tile, x, y);
+
+            if (result instanceof ListenTile l) {
+                l.addUpdateListener(event -> fireUpdate(event.oldTile, event.newTile, x, y));
+            }
+
             fireUpdate(oldTile, tile, x, y);
 
             return result;

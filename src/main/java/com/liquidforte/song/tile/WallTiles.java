@@ -7,6 +7,11 @@ import java.awt.*;
 public class WallTiles extends FloorTiles {
     private final Color wallColor;
 
+    public Tile wallCornerNEBlank;
+    public Tile wallCornerSEBlank;
+    public Tile wallCornerSWBlank;
+    public Tile wallCornerNWBlank;
+
     public Tile wallCornerNESmooth;
     public Tile wallCornerSESmooth;
     public Tile wallCornerSWSmooth;
@@ -26,6 +31,11 @@ public class WallTiles extends FloorTiles {
     public Tile wallCornerSEDense;
     public Tile wallCornerSWDense;
     public Tile wallCornerNWDense;
+
+    public Tile wallHalfNorthBlank;
+    public Tile wallHalfEastBlank;
+    public Tile wallHalfSouthBlank;
+    public Tile wallHalfWestBlank;
 
     public Tile wallHalfNorthSmooth;
     public Tile wallHalfEastSmooth;
@@ -60,159 +70,175 @@ public class WallTiles extends FloorTiles {
     }
 
     private void createCorners() {
+        createBlankCorners();
         createSmoothCorners();
         createSparseCorners();
         createMediumCorners();
         createDenseCorners();
     }
 
+    private void createBlankCorners() {
+        this.wallCornerNEBlank = new ColoredTile(Tileset.LINE_1100, wallColor);
+        this.wallCornerSEBlank = new ColoredTile(Tileset.LINE_0110, wallColor);
+        this.wallCornerSWBlank = new ColoredTile(Tileset.LINE_0011, wallColor);
+        this.wallCornerNWBlank = new ColoredTile(Tileset.LINE_1001, wallColor);
+    }
+
     private void createSmoothCorners() {
         this.wallCornerNESmooth = createTile(
-                new ColoredTile(Tileset.LINE_1100, wallColor),
+                this.wallCornerNEBlank,
                 this.floorCornerNESmooth
         );
 
         this.wallCornerSESmooth = createTile(
-                new ColoredTile(Tileset.LINE_0110, wallColor),
+                this.wallCornerSEBlank,
                 this.floorCornerSESmooth
         );
 
         this.wallCornerSWSmooth = createTile(
-                new ColoredTile(Tileset.LINE_0011, wallColor),
+                this.wallCornerSWBlank,
                 this.floorCornerSWSmooth
         );
 
         this.wallCornerNWSmooth = createTile(
-                new ColoredTile(Tileset.LINE_1001, wallColor),
+                this.wallCornerNWBlank,
                 this.floorCornerNWSmooth
         );
     }
 
     private void createSparseCorners() {
         this.wallCornerNESparse = createTile(
-                new ColoredTile(Tileset.LINE_1100, wallColor),
+                this.wallCornerNEBlank,
                 this.floorCornerNESparse
         );
 
         this.wallCornerSESparse = createTile(
-                new ColoredTile(Tileset.LINE_0110, wallColor),
+                this.wallCornerSEBlank,
                 this.floorCornerSESparse
         );
 
         this.wallCornerSWSparse = createTile(
-                new ColoredTile(Tileset.LINE_0011, wallColor),
+                this.wallCornerSWBlank,
                 this.floorCornerSWSparse
         );
 
         this.wallCornerNWSparse = createTile(
-                new ColoredTile(Tileset.LINE_1001, wallColor),
+                this.wallCornerNWBlank,
                 this.floorCornerNWSparse
         );
     }
 
     private void createMediumCorners() {
         this.wallCornerNEMedium = createTile(
-                new ColoredTile(Tileset.LINE_1100, wallColor),
+                this.wallCornerNEBlank,
                 this.floorCornerNEMedium
         );
 
         this.wallCornerSEMedium = createTile(
-                new ColoredTile(Tileset.LINE_0110, wallColor),
+                this.wallCornerSEBlank,
                 this.floorCornerSEMedium
         );
 
         this.wallCornerSWMedium = createTile(
-                new ColoredTile(Tileset.LINE_0011, wallColor),
+                this.wallCornerSWBlank,
                 this.floorCornerSWMedium
         );
 
         this.wallCornerNWMedium = createTile(
-                new ColoredTile(Tileset.LINE_1001, wallColor),
+                this.wallCornerNWBlank,
                 this.floorCornerNWMedium
         );
     }
 
     private void createDenseCorners() {
         this.wallCornerNEDense = createTile(
-                new ColoredTile(Tileset.LINE_1100, wallColor),
+                this.wallCornerNEBlank,
                 this.floorCornerNEDense
         );
 
         this.wallCornerSEDense = createTile(
-                new ColoredTile(Tileset.LINE_0110, wallColor),
+                this.wallCornerSEBlank,
                 this.floorCornerSEDense
         );
 
         this.wallCornerSWDense = createTile(
-                new ColoredTile(Tileset.LINE_0011, wallColor),
+                this.wallCornerSWBlank,
                 this.floorCornerSWDense
         );
 
         this.wallCornerNWDense = createTile(
-                new ColoredTile(Tileset.LINE_1001, wallColor),
+                this.wallCornerNWBlank,
                 this.floorCornerNWDense
         );
     }
 
     private void createHalves() {
+        createBlankHalves();
         createSmoothHalves();
         createSparseHalves();
         createMediumHalves();
         createDenseHalves();
     }
 
+    private void createBlankHalves() {
+        this.wallHalfNorthBlank = new ColoredTile(Tileset.LINE_0101, wallColor);
+        this.wallHalfEastBlank = new ColoredTile(Tileset.LINE_1010, wallColor);
+        this.wallHalfSouthBlank = new ColoredTile(Tileset.LINE_0101, wallColor);
+        this.wallHalfWestBlank = new ColoredTile(Tileset.LINE_1010, wallColor);
+    }
+
     private void createSmoothHalves() {
         this.wallHalfNorthSmooth = createTile(
-                new ColoredTile(Tileset.LINE_0101, wallColor),
+                this.wallHalfNorthBlank,
                 this.floorHalfNorthSmooth
         );
 
         this.wallHalfEastSmooth = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfEastBlank,
                 this.floorHalfEastSmooth
         );
 
         this.wallHalfSouthSmooth = createTile(
-                new ColoredTile(Tileset.LINE_0101, wallColor),
+                this.wallHalfSouthBlank,
                 this.floorHalfSouthSmooth
         );
 
         this.wallHalfWestSmooth = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfWestBlank,
                 this.floorHalfWestSmooth
         );
     }
 
     private void createSparseHalves() {
         this.wallHalfNorthSparse = createTile(
-                new ColoredTile(Tileset.LINE_0101, wallColor),
+                this.wallHalfNorthBlank,
                 this.floorHalfNorthSparse
         );
 
         this.wallHalfEastSparse = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfEastBlank,
                 this.floorHalfEastSparse
         );
 
         this.wallHalfSouthSparse = createTile(
-                new ColoredTile(Tileset.LINE_0101, wallColor),
+                this.wallHalfSouthBlank,
                 this.floorHalfSouthSparse
         );
 
         this.wallHalfWestSparse = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfWestBlank,
                 this.floorHalfWestSparse
         );
     }
 
     private void createMediumHalves() {
         this.wallHalfNorthMedium = createTile(
-                new ColoredTile(Tileset.LINE_0101, wallColor),
+                this.wallHalfNorthBlank,
                 this.floorHalfNorthMedium
         );
 
         this.wallHalfEastMedium = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfEastBlank,
                 this.floorHalfEastMedium
         );
 
@@ -222,29 +248,29 @@ public class WallTiles extends FloorTiles {
         );
 
         this.wallHalfWestMedium = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfWestBlank,
                 this.floorHalfWestMedium
         );
     }
 
     private void createDenseHalves() {
         this.wallHalfNorthDense = createTile(
-                new ColoredTile(Tileset.LINE_0101, wallColor),
+                this.wallHalfNorthBlank,
                 this.floorHalfNorthDense
         );
 
         this.wallHalfEastDense = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfEastBlank,
                 this.floorHalfEastDense
         );
 
         this.wallHalfSouthDense = createTile(
-                new ColoredTile(Tileset.LINE_0101, wallColor),
+                this.wallHalfSouthBlank,
                 this.floorHalfSouthDense
         );
 
         this.wallHalfWestDense = createTile(
-                new ColoredTile(Tileset.LINE_1010, wallColor),
+                this.wallHalfWestBlank,
                 this.floorHalfWestDense
         );
     }
@@ -269,6 +295,7 @@ public class WallTiles extends FloorTiles {
 
     private Tile getSouthwest(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallCornerSWBlank;
             case Smooth -> wallCornerSWSmooth;
             case Sparse -> wallCornerSWSparse;
             case Medium -> wallCornerSWMedium;
@@ -278,6 +305,7 @@ public class WallTiles extends FloorTiles {
 
     private Tile getNorthwest(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallCornerNWBlank;
             case Smooth -> wallCornerNWSmooth;
             case Sparse -> wallCornerNWSparse;
             case Medium -> wallCornerNWMedium;
@@ -287,6 +315,7 @@ public class WallTiles extends FloorTiles {
 
     private Tile getSoutheast(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallCornerSEBlank;
             case Smooth -> wallCornerSESmooth;
             case Sparse -> wallCornerSESparse;
             case Medium -> wallCornerSEMedium;
@@ -296,6 +325,7 @@ public class WallTiles extends FloorTiles {
 
     private Tile getNortheast(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallCornerNEBlank;
             case Smooth -> wallCornerNESmooth;
             case Sparse -> wallCornerNESparse;
             case Medium -> wallCornerNEMedium;
@@ -305,6 +335,7 @@ public class WallTiles extends FloorTiles {
 
     private Tile getWest(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallHalfWestBlank;
             case Smooth -> wallHalfWestSmooth;
             case Sparse -> wallHalfWestSparse;
             case Medium -> wallHalfWestMedium;
@@ -314,6 +345,7 @@ public class WallTiles extends FloorTiles {
 
     private Tile getSouth(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallHalfSouthBlank;
             case Smooth -> wallHalfSouthSmooth;
             case Sparse -> wallHalfSouthSparse;
             case Medium -> wallHalfSouthMedium;
@@ -323,6 +355,7 @@ public class WallTiles extends FloorTiles {
 
     private Tile getEast(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallHalfWestBlank;
             case Smooth -> wallHalfEastSmooth;
             case Sparse -> wallHalfEastSparse;
             case Medium -> wallHalfEastMedium;
@@ -332,6 +365,7 @@ public class WallTiles extends FloorTiles {
 
     public Tile getFull(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> floorFullBlank;
             case Smooth -> floorFullSmooth;
             case Sparse -> floorFullSparse;
             case Medium -> floorFullMedium;
@@ -341,6 +375,7 @@ public class WallTiles extends FloorTiles {
 
     public Tile getNorth(FloorDecoration floorDecoration) {
         return switch (floorDecoration) {
+            case Blank -> wallHalfNorthBlank;
             case Smooth -> wallHalfNorthSmooth;
             case Sparse -> wallHalfNorthSparse;
             case Medium -> wallHalfNorthMedium;

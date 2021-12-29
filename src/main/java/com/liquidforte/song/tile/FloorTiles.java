@@ -15,6 +15,7 @@ public class FloorTiles {
     public final Tile floorHalfSouthSmooth;
     public final Tile floorHalfWestSmooth;
 
+    public final Tile floorFullBlank;
     public final Tile floorFullSmooth;
     public final Tile floorFullSparse;
     public final Tile floorFullMedium;
@@ -80,6 +81,7 @@ public class FloorTiles {
         this.floorHalfSouthSmooth = new ColoredTile(Tileset.HALF_BLOCK_BOTTOM, floorColor);
         this.floorHalfWestSmooth = new ColoredTile(Tileset.HALF_BLOCK_LEFT, floorColor);
 
+        this.floorFullBlank = new ColoredTile(Tileset.NUL, floorColor);
         this.floorFullSmooth = new ColoredTile(Tileset.FULL_BLOCK, floorColor);
         this.floorFullSparse = createTile(new ColoredTile(Tileset.SPARSE_DOTS, floorDecorationColor), this.floorFullSmooth);
         this.floorFullMedium = createTile(new ColoredTile(Tileset.MEDIUM_DOTS, floorDecorationColor), this.floorFullSmooth);
