@@ -8,14 +8,14 @@ public class TileUtil {
     private static final Charset CONVERSION = Charset.forName("Cp437");
 
     public static char decodeTile(int x, int y) {
-        return decodeTile(y * 16 + x);
+        return decodeTile((byte) (y * 16 + x));
     }
 
-    public static char decodeTile(int tile) {
-        return CONVERSION.decode(ByteBuffer.wrap(new byte[]{(byte) tile})).get();
+    public static char decodeTile(byte tile) {
+        return CONVERSION.decode(ByteBuffer.wrap(new byte[]{tile})).get();
     }
 
-    public static int encodeTile(char tile) {
-        return CONVERSION.encode(CharBuffer.wrap(new char[] {tile})).get();
+    public static byte encodeTile(char tile) {
+        return CONVERSION.encode(CharBuffer.wrap(new char[]{tile})).get();
     }
 }

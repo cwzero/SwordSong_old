@@ -77,6 +77,55 @@ public class Tile implements Drawable {
         this.empty = empty;
     }
 
+    public Tile(Tile source, byte tile) {
+        this.tile = TileUtil.decodeTile(tile);
+        this.color = source.color;
+        this.solid = source.solid;
+        this.empty = source.empty;
+    }
+
+    public Tile(Tile source, byte tile, Color color) {
+        this.tile = TileUtil.decodeTile(tile);
+        this.color = color;
+        this.solid = source.solid;
+        this.empty = source.empty;
+    }
+
+    public Tile(Tile source, byte tile, Color color, boolean solid) {
+        this.tile = TileUtil.decodeTile(tile);
+        this.color = color;
+        this.solid = solid;
+        this.empty = source.empty;
+    }
+
+    public Tile(Tile source, byte tile, Color color, boolean solid, boolean empty) {
+        this.tile = TileUtil.decodeTile(tile);
+        this.color = color;
+        this.solid = solid;
+        this.empty = empty;
+    }
+
+    public Tile(byte tile, Color color) {
+        this.tile = TileUtil.decodeTile(tile);
+        this.color = color;
+        this.solid = true;
+        this.empty = false;
+    }
+
+    public Tile(byte tile, Color color, boolean solid) {
+        this.tile = TileUtil.decodeTile(tile);
+        this.color = color;
+        this.solid = solid;
+        this.empty = false;
+    }
+
+    public Tile(byte tile, Color color, boolean solid, boolean empty) {
+        this.tile = TileUtil.decodeTile(tile);
+        this.color = color;
+        this.solid = solid;
+        this.empty = empty;
+    }
+
     public char getTile() {
         return tile;
     }
@@ -103,10 +152,6 @@ public class Tile implements Drawable {
 
     public static Tile create(int x, int y, Color color) {
         return new Tile(TileUtil.decodeTile(x, y), color);
-    }
-
-    public static Tile create(Tile tile, Color color) {
-        return new Tile(tile, color);
     }
 
     @Override

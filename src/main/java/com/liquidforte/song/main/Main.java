@@ -4,7 +4,8 @@ import com.liquidforte.song.grid.ArrayTileGrid;
 import com.liquidforte.song.grid.TileGridView;
 import com.liquidforte.song.tile.Tile;
 import com.liquidforte.song.ui.GameWindow;
-import com.liquidforte.song.ui.GridPanel;
+import com.liquidforte.song.ui.GamePanel;
+import com.liquidforte.song.util.Tileset;
 
 import java.awt.*;
 
@@ -22,12 +23,12 @@ public class Main {
     }
 
     public static void testWindow() {
-        GridPanel gridPanel = new GridPanel(103, 59);
-        GameWindow gameWindow = new GameWindow(gridPanel);
+        GamePanel gamePanel = new GamePanel(103, 59);
+        GameWindow gameWindow = new GameWindow(gamePanel);
         gameWindow.start();
 
-        Tile tile = Tile.create(0, 4, Color.blue);
-        TileGridView grid = gridPanel.getGrid();
+        Tile tile = new Tile(Tileset.LARGE_CIRCLE, Color.blue);
+        TileGridView grid = gamePanel.getGrid();
         TileGridView view = new ArrayTileGrid(256, 256);
         int offsetX = 100, offsetY = 100;
         grid.addOverlay(view, offsetX, offsetY, 0, 0, 80, 30);

@@ -110,11 +110,22 @@ public class TextureUtil {
             return getTile(TileUtil.encodeTile(tile));
         }
 
+        public BufferedImage getTile(byte tile) {
+            int t = tile & 0xFF;
+            return getTile(t);
+        }
+
         private BufferedImage getTile(int tile) {
             return getTile(tile % 16, tile / 16);
         }
 
         private BufferedImage getTile(int x, int y) {
+            if (x < 0) {
+                x += 16;
+            }
+            if (y < 0) {
+                y += 16;
+            }
             return set.getSubimage(x * 16, y * 16, 16, 16);
         }
     }

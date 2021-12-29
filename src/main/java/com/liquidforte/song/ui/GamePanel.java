@@ -5,14 +5,14 @@ import com.liquidforte.song.grid.ArrayTileGrid;
 import javax.swing.*;
 import java.awt.*;
 
-public class GridPanel extends JPanel {
+public class GamePanel extends JPanel {
     private final ArrayTileGrid grid;
 
-    public GridPanel(int width, int height) {
+    public GamePanel(int width, int height) {
         this(new ArrayTileGrid(width, height));
     }
 
-    public GridPanel(ArrayTileGrid grid) {
+    public GamePanel(ArrayTileGrid grid) {
         this.grid = grid;
 
         setPreferredSize(new Dimension(grid.getWidth() * 16, grid.getHeight() * 16));
