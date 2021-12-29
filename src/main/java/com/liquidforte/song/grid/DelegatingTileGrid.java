@@ -3,6 +3,7 @@ package com.liquidforte.song.grid;
 import com.liquidforte.song.event.GridUpdateEvent;
 import com.liquidforte.song.event.GridUpdateListener;
 import com.liquidforte.song.tile.Tile;
+import com.liquidforte.song.tile.Tile;
 
 public class DelegatingTileGrid extends AbstractTileGrid implements GridUpdateListener {
     private final TileGridView delegate;

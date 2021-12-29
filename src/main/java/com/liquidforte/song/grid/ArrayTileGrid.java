@@ -1,6 +1,7 @@
 package com.liquidforte.song.grid;
 
 import com.liquidforte.song.tile.Tile;
+import com.liquidforte.song.tile.Tile;
 
 public class ArrayTileGrid extends AbstractTileGrid {
     private final Tile[][] grid;

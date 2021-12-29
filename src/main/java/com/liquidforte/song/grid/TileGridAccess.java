@@ -2,6 +2,7 @@ package com.liquidforte.song.grid;
 
 import com.liquidforte.song.event.GridUpdateListener;
 import com.liquidforte.song.tile.Tile;
+import com.liquidforte.song.tile.Tile;
 
 import java.awt.*;
 import java.awt.event.KeyListener;

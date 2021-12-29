@@ -86,6 +86,10 @@ public abstract class AbstractTileGrid extends KeyAdapter implements TileGrid {
         return new OffsetTileGrid(this, x, y);
     }
 
+    /* TODO: a way to swap overlays - a gridaccess that swaps which grid we're looking at
+     *      this requires a dynamic grid view - a movable subgrid, as well as a listener that
+     *      listens for changes in the actual viewed area (depending on movement)
+     */
     @Override
     public void addOverlay(GridDrawing source, int yourOffsetX, int yourOffsetY, int myOffsetX, int myOffsetY, int width, int height) {
         source.addListener(new AreaListener(yourOffsetX, yourOffsetY, width, height) {

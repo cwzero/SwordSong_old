@@ -2,6 +2,7 @@ package com.liquidforte.song.grid;
 
 import com.liquidforte.song.event.GridUpdateEvent;
 import com.liquidforte.song.tile.Tile;
+import com.liquidforte.song.tile.Tile;
 
 public class OffsetTileGrid extends DelegatingTileGrid {
     private int offsetX, offsetY;
