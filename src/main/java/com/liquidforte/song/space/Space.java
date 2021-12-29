@@ -2,37 +2,31 @@ package com.liquidforte.song.space;
 
 import com.liquidforte.song.block.Block;
 import com.liquidforte.song.event.TileUpdateEvent;
-import com.liquidforte.song.event.TileUpdateListener;
 import com.liquidforte.song.tile.LayeredTile;
 import com.liquidforte.song.tile.ListenTile;
 import com.liquidforte.song.tile.Tile;
+import com.liquidforte.song.util.TileUtil;
 
-import javax.swing.event.EventListenerList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Stream;
 
-public class Space extends Block implements ListenTile {
-    private final EventListenerList listeners = new EventListenerList();
+public class Space extends Block {
     private final Stack<Tile> middle = new Stack<>();
 
     private Tile foreground;
     private Tile background;
 
+    @Override
+    public void updateTile(TileUpdateEvent event) {
+        setTile(new LayeredTile(getLayers()));
+        super.updateTile(event);
+    }
+
     private synchronized void update() {
         setTile(new LayeredTile(getLayers()));
         fireUpdate();
-    }
-
-    private void fireUpdate() {
-        fireUpdate(new TileUpdateEvent(this));
-    }
-
-    private void fireUpdate(TileUpdateEvent event) {
-        for (TileUpdateListener l : listeners.getListeners(TileUpdateListener.class)) {
-            l.updateTile(event);
-        }
     }
 
     private Tile[] getLayers() {
@@ -49,15 +43,25 @@ public class Space extends Block implements ListenTile {
         return layers.toArray(new Tile[0]);
     }
 
-    private boolean checkDirty(Tile oldTile, Tile newTile) {
-        return (oldTile != null && oldTile.equals(newTile)) || (oldTile == null && newTile != null);
-    }
-
     public void setForeground(Tile foreground) {
-        if (checkDirty(this.foreground, foreground)) {
+        if (TileUtil.checkDirty(this.foreground, foreground)) {
+            if (this.foreground instanceof ListenTile t) {
+                t.removeUpdateListener(this);
+            }
             this.foreground = foreground;
+            if (foreground instanceof ListenTile t) {
+                t.addUpdateListener(this);
+            }
             update();
         }
+    }
+
+    public void clearForeground() {
+        setForeground(null);
+    }
+
+    public Tile getForeground() {
+        return foreground;
     }
 
     public void pushMiddle(Tile middle) {
@@ -65,6 +69,10 @@ public class Space extends Block implements ListenTile {
         if (foreground == null) {
             update();
         }
+    }
+
+    public Stack<Tile> getMiddle() {
+        return middle;
     }
 
     public void removeMiddle(Tile middle) {
@@ -76,10 +84,18 @@ public class Space extends Block implements ListenTile {
     }
 
     public synchronized void setBackground(Tile background) {
-        if (checkDirty(this.background, background)) {
+        if (TileUtil.checkDirty(this.background, background)) {
             this.background = background;
             update();
         }
+    }
+
+    public void clearBackground() {
+        setBackground(null);
+    }
+
+    public Tile getBackground() {
+        return background;
     }
 
     protected Stream<Tile> stream() {
@@ -103,15 +119,5 @@ public class Space extends Block implements ListenTile {
     @Override
     public boolean isSolid() {
         return stream().anyMatch(it -> it instanceof Block b && b.isSolid());
-    }
-
-    @Override
-    public void addUpdateListener(TileUpdateListener listener) {
-        listeners.add(TileUpdateListener.class, listener);
-    }
-
-    @Override
-    public void removeUpdateListener(TileUpdateListener listener) {
-        listeners.remove(TileUpdateListener.class, listener);
     }
 }

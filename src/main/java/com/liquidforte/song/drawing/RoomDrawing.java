@@ -26,7 +26,7 @@ public class RoomDrawing {
         Direction direction = getDirection(grid, w, h, tx, ty);
         FloorDecoration decoration = floorDecorationStrategy.getDecoration(w, h, tx, ty, direction);
         Block block = new RoomBlock(wallTiles, direction, decoration);
-        grid.getSpace(x + tx, y + ty).setBackground(block);
+        grid.createSpace(x + tx, y + ty).setBackground(block);
     }
 
     public static Direction getDirection(SpaceGrid grid, int w, int h, int tx, int ty) {

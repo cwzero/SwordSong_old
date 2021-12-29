@@ -1,13 +1,17 @@
 package com.liquidforte.song.tile;
 
+import com.liquidforte.song.event.TileUpdateEvent;
+import com.liquidforte.song.event.TileUpdateListener;
 import com.liquidforte.song.util.Colorizer;
 import com.liquidforte.song.util.TextureUtil;
 
+import javax.swing.event.EventListenerList;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-public class ColoredTile implements Tile {
+public class ColoredTile implements Tile, ListenTile {
+    private final EventListenerList listeners = new EventListenerList();
     private final Tile source;
     private Color color;
     private BufferedImage texture;
@@ -39,6 +43,10 @@ public class ColoredTile implements Tile {
         update();
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     private void update() {
         if (source instanceof Texture t) {
             this.texture = TextureUtil.getTexture(color, t.getTile());
@@ -56,10 +64,31 @@ public class ColoredTile implements Tile {
         } else {
             this.texture = Colorizer.colorize(source.getTexture(), color);
         }
+        fireUpdate();
+    }
+
+    protected void fireUpdate() {
+        fireUpdate(new TileUpdateEvent(this));
+    }
+
+    protected void fireUpdate(TileUpdateEvent event) {
+        for (TileUpdateListener listener : listeners.getListeners(TileUpdateListener.class)) {
+            listener.updateTile(event);
+        }
     }
 
     @Override
     public BufferedImage getTexture() {
         return texture;
+    }
+
+    @Override
+    public void addUpdateListener(TileUpdateListener listener) {
+        listeners.add(TileUpdateListener.class, listener);
+    }
+
+    @Override
+    public void removeUpdateListener(TileUpdateListener listener) {
+        listeners.remove(TileUpdateListener.class, listener);
     }
 }

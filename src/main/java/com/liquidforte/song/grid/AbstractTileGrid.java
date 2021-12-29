@@ -4,8 +4,10 @@ import com.liquidforte.song.block.Block;
 import com.liquidforte.song.event.AreaListener;
 import com.liquidforte.song.event.GridUpdateEvent;
 import com.liquidforte.song.event.GridUpdateListener;
+import com.liquidforte.song.event.TileUpdateListener;
 import com.liquidforte.song.tile.ListenTile;
 import com.liquidforte.song.tile.Tile;
+import com.liquidforte.song.util.TileUtil;
 
 import javax.swing.event.EventListenerList;
 import java.awt.*;
@@ -13,9 +15,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractTileGrid extends KeyAdapter implements TileGrid {
     private final EventListenerList listeners = new EventListenerList();
+    private Map<ListenTile, TileUpdateListener> tileListeners = new HashMap<>();
 
     public boolean contains(int x, int y) {
         return x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
@@ -52,36 +57,36 @@ public abstract class AbstractTileGrid extends KeyAdapter implements TileGrid {
         if (contains(x, y)) {
             Tile oldTile = getTile(x, y);
 
-            if (tile == null && oldTile == null) {
-                return null;
+            if (TileUtil.checkDirty(oldTile, tile)) {
+                if (oldTile instanceof ListenTile t) {
+                    t.removeUpdateListener(tileListeners.get(oldTile));
+                }
+
+                doSetTile(tile, x, y);
+
+                if (tile instanceof ListenTile l) {
+                    tileListeners.put(l, event -> fireUpdate(event.oldTile, event.newTile, x, y));
+                    l.addUpdateListener(tileListeners.get(tile));
+                }
+
+                fireUpdate(oldTile, tile, x, y);
+
+                return tile;
             }
-
-            if (tile != null && tile.equals(oldTile)) {
-                return null;
-            }
-
-            Tile result = doSetTile(tile, x, y);
-
-            if (result instanceof ListenTile l) {
-                l.addUpdateListener(event -> fireUpdate(event.oldTile, event.newTile, x, y));
-            }
-
-            fireUpdate(oldTile, tile, x, y);
-
-            return result;
         }
+
         return null;
     }
 
     protected void fireUpdate(Tile oldTile, Tile newTile, int x, int y) {
-        fireEvent(new GridUpdateEvent(this, oldTile, newTile, x, y));
+        fireUpdate(new GridUpdateEvent(this, oldTile, newTile, x, y));
     }
 
     protected void fireUpdate(Tile oldTile, Tile newTile, Point pos) {
-        fireEvent(new GridUpdateEvent(this, oldTile, newTile, pos.x, pos.y));
+        fireUpdate(new GridUpdateEvent(this, oldTile, newTile, pos.x, pos.y));
     }
 
-    protected void fireEvent(GridUpdateEvent event) {
+    protected void fireUpdate(GridUpdateEvent event) {
         Arrays.stream(listeners.getListeners(GridUpdateListener.class))
                 .filter(it -> it.filter(event))
                 .forEach(it -> it.gridUpdate(event));
