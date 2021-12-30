@@ -1,11 +1,19 @@
 package com.liquidforte.song.pointer;
 
 public interface Destination<K, V> {
-    V set(K k, V v);
+    default V set(K k, V v) {
+        return putValue(k, v);
+    }
 
-    V setValue(K k, V v);
+    default V setValue(K k, V v) {
+        return putValue(k, v);
+    }
 
-    V removeKey(K k);
+    V putValue(K k, V v);
+
+    default V removeKey(K k) {
+        return putValue(k, null);
+    }
 
     DestinationPointer<K, V> getDestinationPointer(K k);
 }

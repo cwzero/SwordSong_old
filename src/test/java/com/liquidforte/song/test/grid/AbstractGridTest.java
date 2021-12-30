@@ -62,8 +62,11 @@ public class AbstractGridTest {
         }
 
         @Override
-        protected String doRemove(TestPoint testPoint) {
-            return doPutValue(testPoint, null);
+        public boolean containsKey(Object key) {
+            if (key instanceof TestPoint p) {
+                return p.x >= 0 && p.x < grid.length;
+            }
+            return false;
         }
 
         @Override

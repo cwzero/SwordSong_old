@@ -28,14 +28,15 @@ public class GridEventTest extends AbstractGridTest {
     @BeforeEach
     public void setUp() {
         grid = new TestGrid(1);
+        grid.addGridListener(listener);
+        grid.addGridPointListener(pointListener);
+        grid.addGridAddListener(addListener);
+        grid.addGridRemoveListener(removeListener);
+        grid.addGridUpdateListener(updateListener);
     }
 
     @Test
     public void testAddEvent() {
-        grid.addGridListener(listener);
-        grid.addGridPointListener(pointListener);
-        grid.addGridAddListener(addListener);
-
         when(listener.filterEvent(any(GridAddEvent.class))).thenReturn(true);
         when(pointListener.filterPointEvent(any(GridAddEvent.class))).thenReturn(true);
         when(addListener.filterAddEvent(any(GridAddEvent.class))).thenReturn(true);
@@ -47,10 +48,10 @@ public class GridEventTest extends AbstractGridTest {
     }
 
     private void verifyAdd() {
-        verify(listener, times(1)).filterEvent(any(GridAddEvent.class));
-        verify(listener, times(1)).handleEvent(any(GridAddEvent.class));
-        verify(pointListener, times(1)).filterPointEvent(any(GridAddEvent.class));
-        verify(pointListener, times(1)).handlePointEvent(any(GridAddEvent.class));
+        verify(listener, times(3)).filterEvent(any(GridAddEvent.class));
+        verify(listener, times(3)).handleEvent(any(GridAddEvent.class));
+        verify(pointListener, times(2)).filterPointEvent(any(GridAddEvent.class));
+        verify(pointListener, times(2)).handlePointEvent(any(GridAddEvent.class));
         verify(addListener, times(1)).filterAddEvent(any(GridAddEvent.class));
         verify(addListener, times(1)).handleAddEvent(any(GridAddEvent.class));
     }

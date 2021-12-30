@@ -1,9 +1,7 @@
 package com.liquidforte.song.grid;
 
 import com.liquidforte.song.event.EventListener;
-import com.liquidforte.song.grid.event.FireGridEvent;
-import com.liquidforte.song.grid.event.GridEvent;
-import com.liquidforte.song.grid.event.GridListener;
+import com.liquidforte.song.grid.event.*;
 import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Size;
 import com.liquidforte.song.pointer.DestinationPointer;
@@ -37,10 +35,20 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
 
     protected <T extends java.util.EventListener, E> E fireEvent(Class<T> listenerClass, BiPredicate<T, E> filter, BiConsumer<T, E> handler, E event) {
         Executor executor = ForkJoinPool.commonPool();
-        Arrays.stream(listeners.getListeners(listenerClass))
+        for (T listener: listeners.getListeners(listenerClass)) {
+            if (filter.test(listener, event)) {
+                executor.execute(() -> {
+                    handler.accept(listener, event);
+                });
+            }
+        }
+
+        /*Arrays.stream(listeners.getListeners(listenerClass))
                 .filter(it -> filter.test(it, event))
                 .forEach(it -> executor
                         .execute(() -> handler.accept(it, event)));
+
+         */
         return event;
     }
 
@@ -58,39 +66,47 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
         return doGetValue(p);
     }
 
+    @Override
+    public V put(P key, V value) {
+        return putValue(key, value);
+    }
+
     protected abstract V doPutValue(P p, V v);
 
     @Override
-    public V setValue(P p, V v) {
-        return doPutValue(p, v);
-    }
+    public V putValue(P p, V v) {
+        V currentValue = get(p);
 
-    @Override
-    public V set(P p, V v) {
-        return doPutValue(p, v);
-    }
+        if (Objects.equals(currentValue, v)) {
+            return currentValue;
+        }
 
-    @Override
-    public V put(P key, V value) {
-        return doPutValue(key, value);
+        V result = doPutValue(p, v);
+
+        if (currentValue == null) {
+            var event = new DefaultGridAddEvent<>(this, p, v);
+            fireGridEvent(event);
+            fireGridPointEvent(event);
+            fireGridAddEvent(event);
+        } else if (v == null) {
+            fireGridRemoveEvent(new DefaultGridRemoveEvent<>(this, p, currentValue));
+        } else {
+            fireGridUpdateEvent(new DefaultGridUpdateEvent<>(this, p, currentValue, v));
+        }
+
+        return result;
     }
 
     @Override
     public abstract V remove(Object key);
 
-    protected V doRemove(P p) {
-        return doPutValue(p, null);
-    }
-
-    @Override
-    public V removeKey(P p) {
-        return doRemove(p);
-    }
-
     @Override
     public Set<P> keySet() {
         return keyStream().collect(Collectors.toSet());
     }
+
+    @Override
+    public abstract boolean containsKey(Object key);
 
     protected abstract Stream<P> keyStream();
 
@@ -123,7 +139,7 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
 
                 @Override
                 public void remove() {
-                    AbstractGrid.this.doRemove(prev.key);
+                    AbstractGrid.this.remove(prev.key);
                 }
 
                 @Override
@@ -154,12 +170,12 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
 
         @Override
         public V getValue() {
-            return AbstractGrid.this.doGetValue(key);
+            return AbstractGrid.this.getValue(key);
         }
 
         @Override
         public V setValue(V value) {
-            return AbstractGrid.this.doPutValue(key, value);
+            return AbstractGrid.this.setValue(key, value);
         }
     }
 }
