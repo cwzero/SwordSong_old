@@ -1,7 +1,7 @@
 package com.liquidforte.song.test.geometry.threed;
 
-import com.liquidforte.song.geometry.threed.AbstractGrid3D;
-import com.liquidforte.song.gridevent.threed.*;
+import com.liquidforte.oldsong.geometry.threed.AbstractGrid3D;
+import com.liquidforte.oldsong.gridevent.threed.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

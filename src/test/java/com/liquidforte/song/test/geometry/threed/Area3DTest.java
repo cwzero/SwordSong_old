@@ -1,8 +1,8 @@
 package com.liquidforte.song.test.geometry.threed;
 
-import com.liquidforte.song.geometry.threed.Area3D;
-import com.liquidforte.song.geometry.threed.Point3D;
-import com.liquidforte.song.geometry.threed.Size3D;
+import com.liquidforte.oldsong.geometry.threed.Area3D;
+import com.liquidforte.oldsong.geometry.threed.Point3D;
+import com.liquidforte.oldsong.geometry.threed.Size3D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

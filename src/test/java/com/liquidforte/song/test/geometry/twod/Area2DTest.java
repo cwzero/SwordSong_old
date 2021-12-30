@@ -1,8 +1,8 @@
 package com.liquidforte.song.test.geometry.twod;
 
-import com.liquidforte.song.geometry.twod.Area2D;
-import com.liquidforte.song.geometry.twod.Point2D;
-import com.liquidforte.song.geometry.twod.Size2D;
+import com.liquidforte.oldsong.geometry.twod.Area2D;
+import com.liquidforte.oldsong.geometry.twod.Point2D;
+import com.liquidforte.oldsong.geometry.twod.Size2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
