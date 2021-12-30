@@ -4,14 +4,10 @@ import java.util.stream.Stream;
 
 /*
     A bidirectional function between two different point representations in the same dimension
+    A cuboid with its own reference space
  */
-public interface Area<P extends Point, S extends Size<P>> extends Located<P>, Sized<P, S> {
-    P getExternalOffset();
-
+public interface Area<P extends Point, S extends Size<P>> extends Cuboid<P, S> {
     P getInternalOffset();
-
-    @Override
-    S getSize();
 
     P transformEnter(P p);
 
@@ -24,9 +20,4 @@ public interface Area<P extends Point, S extends Size<P>> extends Located<P>, Si
     Stream<P> streamExternal();
 
     Stream<P> streamInternal();
-
-    @Override
-    default P getLocation() {
-        return getExternalOffset();
-    }
 }
