@@ -111,7 +111,9 @@ public abstract class AbstractGrid<P extends Point<P>, S extends Size<P, S>, V> 
         return getSize().contains(point);
     }
 
-    protected abstract Stream<P> keyStream();
+    protected Stream<P> keyStream() {
+        return getSize().getPointStream();
+    }
 
     @Override
     public Set<Entry<P, V>> entrySet() {
