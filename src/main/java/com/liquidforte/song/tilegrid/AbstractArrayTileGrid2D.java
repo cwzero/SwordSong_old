@@ -1,8 +1,8 @@
 package com.liquidforte.song.tilegrid;
 
-import com.liquidforte.song.geometry.AbstractArrayGrid2D;
-import com.liquidforte.song.geometry.Array2DCreator;
-import com.liquidforte.song.geometry.Size2D;
+import com.liquidforte.song.geometry.twod.AbstractArrayGrid2D;
+import com.liquidforte.song.geometry.twod.Array2DCreator;
+import com.liquidforte.song.geometry.twod.Size2D;
 import com.liquidforte.song.tile.Tile;
 
 public abstract class AbstractArrayTileGrid2D<G extends TileGrid2D<G, T>, T extends Tile> extends AbstractArrayGrid2D<G, T> implements TileGrid2D<G, T> {

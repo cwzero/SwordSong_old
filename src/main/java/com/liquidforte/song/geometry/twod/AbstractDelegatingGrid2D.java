@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.twod;
 
 public abstract class AbstractDelegatingGrid2D<G extends Grid2D<G, V>, V> extends AbstractGrid2D<G, V> {
     protected abstract G getDelegate();

@@ -1,7 +1,7 @@
 package com.liquidforte.song.gridevent.twod;
 
-import com.liquidforte.song.geometry.Grid2D;
-import com.liquidforte.song.geometry.Point2D;
+import com.liquidforte.song.geometry.twod.Grid2D;
+import com.liquidforte.song.geometry.twod.Point2D;
 
 public class Grid2DPointEvent<G extends Grid2D<G, V>, V> extends Grid2DEvent<G, V> {
     private final Point2D point;

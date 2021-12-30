@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.threed;
 
 @FunctionalInterface
 public interface Array3DCreator<T> {

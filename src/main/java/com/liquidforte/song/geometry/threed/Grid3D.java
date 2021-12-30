@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.threed;
 
 import com.liquidforte.song.gridevent.threed.Grid3DEventSource;
 import com.liquidforte.song.pointer.Dest3D;

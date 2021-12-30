@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.twod;
 
 import com.liquidforte.song.pointer.Positional2D;
 

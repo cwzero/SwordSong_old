@@ -1,7 +1,7 @@
 package com.liquidforte.song.gridevent.threed;
 
-import com.liquidforte.song.geometry.Grid3D;
-import com.liquidforte.song.geometry.Point3D;
+import com.liquidforte.song.geometry.threed.Grid3D;
+import com.liquidforte.song.geometry.threed.Point3D;
 
 public class Grid3DPointEvent<G extends Grid3D<G, V>, V> extends Grid3DEvent<G, V> {
     private final Point3D point;

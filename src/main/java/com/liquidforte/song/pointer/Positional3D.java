@@ -1,6 +1,6 @@
 package com.liquidforte.song.pointer;
 
-import com.liquidforte.song.geometry.Point3D;
+import com.liquidforte.song.geometry.threed.Point3D;
 
 public interface Positional3D {
     default int getX() {

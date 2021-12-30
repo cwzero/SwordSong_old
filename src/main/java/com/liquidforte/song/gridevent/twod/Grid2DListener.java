@@ -1,6 +1,6 @@
 package com.liquidforte.song.gridevent.twod;
 
-import com.liquidforte.song.geometry.Grid2D;
+import com.liquidforte.song.geometry.twod.Grid2D;
 
 import java.util.EventListener;
 

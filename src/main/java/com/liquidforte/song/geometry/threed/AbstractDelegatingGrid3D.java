@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.threed;
 
 public abstract class AbstractDelegatingGrid3D<G extends Grid3D<G, V>, V> extends AbstractGrid3D<G, V> {
     protected abstract G getDelegate();

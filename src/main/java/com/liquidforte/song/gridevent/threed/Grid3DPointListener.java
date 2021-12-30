@@ -1,6 +1,6 @@
 package com.liquidforte.song.gridevent.threed;
 
-import com.liquidforte.song.geometry.Grid3D;
+import com.liquidforte.song.geometry.threed.Grid3D;
 
 public interface Grid3DPointListener<G extends Grid3D<G, V>, V> extends Grid3DListener<G, V> {
     void handlePointEvent(Grid3DPointEvent<G, V> event);

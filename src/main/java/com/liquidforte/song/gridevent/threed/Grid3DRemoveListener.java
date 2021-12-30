@@ -1,6 +1,6 @@
 package com.liquidforte.song.gridevent.threed;
 
-import com.liquidforte.song.geometry.Grid3D;
+import com.liquidforte.song.geometry.threed.Grid3D;
 
 public interface Grid3DRemoveListener<G extends Grid3D<G, V>, V> extends Grid3DPointListener<G, V> {
     void handleRemoveEvent(Grid3DRemoveEvent<G, V> event);

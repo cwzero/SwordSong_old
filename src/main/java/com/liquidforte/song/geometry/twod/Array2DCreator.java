@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.twod;
 
 @FunctionalInterface
 public interface Array2DCreator<T> {

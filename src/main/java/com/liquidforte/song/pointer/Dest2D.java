@@ -1,6 +1,6 @@
 package com.liquidforte.song.pointer;
 
-import com.liquidforte.song.geometry.Point2D;
+import com.liquidforte.song.geometry.twod.Point2D;
 
 public interface Dest2D<V> extends Source2D<V> {
     V set(int x, int y, V v);

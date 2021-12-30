@@ -1,7 +1,7 @@
 package com.liquidforte.song.tilegrid.basic;
 
-import com.liquidforte.song.geometry.Array3DCreator;
-import com.liquidforte.song.geometry.Size3D;
+import com.liquidforte.song.geometry.threed.Array3DCreator;
+import com.liquidforte.song.geometry.threed.Size3D;
 import com.liquidforte.song.tile.Tile;
 
 public class BasicArrayTileGrid3D extends AbstractBasicArrayTileGrid3D {

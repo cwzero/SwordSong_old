@@ -1,6 +1,6 @@
 package com.liquidforte.song.gridevent.threed;
 
-import com.liquidforte.song.geometry.Grid3D;
+import com.liquidforte.song.geometry.threed.Grid3D;
 
 import java.util.EventListener;
 

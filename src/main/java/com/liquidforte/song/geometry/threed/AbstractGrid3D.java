@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.threed;
 
 import com.liquidforte.song.gridevent.threed.*;
 import com.liquidforte.song.pointer.Pointer3D;
@@ -91,31 +91,36 @@ public abstract class AbstractGrid3D<G extends Grid3D<G, V>, V> extends Abstract
         if (current == null) {
             Grid3DAddEvent<G, V> event = new Grid3DAddEvent<>((G) this, pos, v);
             fireEvent(Grid3DListener.class, Grid3DListener::filterEvent, Grid3DListener::handleEvent, event);
-            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handleEvent, event);
+            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handlePointEvent, event);
             fireEvent(Grid3DAddListener.class, Grid3DAddListener::filterAddEvent, Grid3DAddListener::handleAddEvent, event);
 
             cancelled = event.isCancelled();
         } else if (v == null) {
             Grid3DRemoveEvent<G, V> event = new Grid3DRemoveEvent<>((G) this, pos, current);
             fireEvent(Grid3DListener.class, Grid3DListener::filterEvent, Grid3DListener::handleEvent, event);
-            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handleEvent, event);
+            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handlePointEvent, event);
             fireEvent(Grid3DRemoveListener.class, Grid3DRemoveListener::filterRemoveEvent, Grid3DRemoveListener::handleRemoveEvent, event);
+
+            Grid3DUpdateEvent<G, V> updateEvent = new Grid3DUpdateEvent<>((G) this, pos, current, null);
+            fireEvent(Grid3DListener.class, Grid3DListener::filterEvent, Grid3DListener::handleEvent, updateEvent);
+            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handlePointEvent, updateEvent);
+            fireEvent(Grid3DUpdateListener.class, Grid3DUpdateListener::filterUpdateEvent, Grid3DUpdateListener::handleUpdateEvent, updateEvent);
 
             cancelled = event.isCancelled();
         } else {
             Grid3DRemoveEvent<G, V> removeEvent = new Grid3DRemoveEvent<>((G) this, pos, current);
             fireEvent(Grid3DListener.class, Grid3DListener::filterEvent, Grid3DListener::handleEvent, removeEvent);
-            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handleEvent, removeEvent);
+            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handlePointEvent, removeEvent);
             fireEvent(Grid3DRemoveListener.class, Grid3DRemoveListener::filterRemoveEvent, Grid3DRemoveListener::handleRemoveEvent, removeEvent);
 
             Grid3DAddEvent<G, V> addEvent = new Grid3DAddEvent<>((G) this, pos, v);
             fireEvent(Grid3DListener.class, Grid3DListener::filterEvent, Grid3DListener::handleEvent, addEvent);
-            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handleEvent, addEvent);
+            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handlePointEvent, addEvent);
             fireEvent(Grid3DAddListener.class, Grid3DAddListener::filterAddEvent, Grid3DAddListener::handleAddEvent, addEvent);
 
             Grid3DUpdateEvent<G, V> updateEvent = new Grid3DUpdateEvent<>((G) this, pos, current, v);
             fireEvent(Grid3DListener.class, Grid3DListener::filterEvent, Grid3DListener::handleEvent, updateEvent);
-            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handleEvent, updateEvent);
+            fireEvent(Grid3DPointListener.class, Grid3DPointListener::filterPointEvent, Grid3DPointListener::handlePointEvent, updateEvent);
             fireEvent(Grid3DUpdateListener.class, Grid3DUpdateListener::filterUpdateEvent, Grid3DUpdateListener::handleUpdateEvent, updateEvent);
 
             cancelled = removeEvent.isCancelled() || addEvent.isCancelled() || updateEvent.isCancelled();

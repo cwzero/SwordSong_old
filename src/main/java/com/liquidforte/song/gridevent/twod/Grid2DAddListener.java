@@ -1,6 +1,6 @@
 package com.liquidforte.song.gridevent.twod;
 
-import com.liquidforte.song.geometry.Grid2D;
+import com.liquidforte.song.geometry.twod.Grid2D;
 
 public interface Grid2DAddListener<G extends Grid2D<G, V>, V> extends Grid2DPointListener<G, V> {
     void handleAddEvent(Grid2DAddEvent<G, V> event);

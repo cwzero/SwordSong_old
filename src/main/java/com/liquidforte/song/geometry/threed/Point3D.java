@@ -1,4 +1,4 @@
-package com.liquidforte.song.geometry;
+package com.liquidforte.song.geometry.threed;
 
 import com.liquidforte.song.pointer.Positional3D;
 
@@ -21,5 +21,9 @@ public record Point3D(int x, int y, int z) implements Positional3D {
     @Override
     public Point3D getPosition() {
         return this;
+    }
+
+    public Point3D add(int x, int y, int z) {
+        return new Point3D(this.x + x, this.y + y, this.z + z);
     }
 }

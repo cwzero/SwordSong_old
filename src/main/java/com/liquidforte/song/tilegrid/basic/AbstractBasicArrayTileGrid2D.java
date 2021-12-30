@@ -1,7 +1,7 @@
 package com.liquidforte.song.tilegrid.basic;
 
-import com.liquidforte.song.geometry.Array2DCreator;
-import com.liquidforte.song.geometry.Size2D;
+import com.liquidforte.song.geometry.twod.Array2DCreator;
+import com.liquidforte.song.geometry.twod.Size2D;
 import com.liquidforte.song.tile.Tile;
 import com.liquidforte.song.tilegrid.AbstractArrayTileGrid2D;
 
