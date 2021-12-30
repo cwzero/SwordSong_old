@@ -1,6 +1,8 @@
 package com.liquidforte.song.geometry.threed;
 
-public record Size3D(int width, int height, int depth) implements Sized3D {
+import com.liquidforte.song.geometry.Size;
+
+public record Size3D(int width, int height, int depth) implements Size, Vector3D, Sized3D {
     @Override
     public int getWidth() {
         return width;

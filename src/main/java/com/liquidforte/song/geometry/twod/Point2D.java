@@ -1,8 +1,9 @@
 package com.liquidforte.song.geometry.twod;
 
+import com.liquidforte.song.geometry.Point;
 import com.liquidforte.song.pointer.Positional2D;
 
-public record Point2D(int x, int y) implements Positional2D {
+public record Point2D(int x, int y) implements Point, Vector2D, Positional2D {
     @Override
     public int getX() {
         return x;

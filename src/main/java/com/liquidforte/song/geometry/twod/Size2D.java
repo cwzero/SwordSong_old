@@ -1,6 +1,8 @@
 package com.liquidforte.song.geometry.twod;
 
-public record Size2D(int width, int height) implements Sized2D {
+import com.liquidforte.song.geometry.Size;
+
+public record Size2D(int width, int height) implements Size, Vector2D, Sized2D {
     @Override
     public int getWidth() {
         return width;
