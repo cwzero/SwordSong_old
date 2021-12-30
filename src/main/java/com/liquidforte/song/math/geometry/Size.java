@@ -16,4 +16,7 @@ public interface Size<P extends Point<P>, S extends Size<P, S>> extends Vector<S
     default S getSize() {
         return (S) this;
     }
+
+    @Override
+    int count();
 }

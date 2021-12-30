@@ -65,6 +65,16 @@ public abstract class AbstractGrid<P extends Point<P>, S extends Size<P, S>, V> 
     protected abstract V doPutValue(P p, V v);
 
     @Override
+    public int count() {
+        return getSize().count();
+    }
+
+    @Override
+    public int size() {
+        return getSize().count();
+    }
+
+    @Override
     public V putValue(P p, V v) {
         V currentValue = get(p);
 
@@ -145,7 +155,7 @@ public abstract class AbstractGrid<P extends Point<P>, S extends Size<P, S>, V> 
 
         @Override
         public int size() {
-            return keySet().size();
+            return AbstractGrid.this.count();
         }
     }
 

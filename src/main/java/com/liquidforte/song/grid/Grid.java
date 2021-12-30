@@ -13,6 +13,11 @@ import java.util.Map;
 import java.util.Set;
 
 public interface Grid<P extends Point<P>, S extends Size<P, S>, V> extends Map<P, V>, Source<P, V>, Destination<P, V>, GridEventSource<P, S, V>, Sized<P, S> {
+    @Override
+    default int size() {
+        return getSize().count();
+    }
+
     interface GridEntrySet<P, V> extends Set<Map.Entry<P, V>> {
 
     }

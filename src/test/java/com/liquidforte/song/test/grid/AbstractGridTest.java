@@ -42,6 +42,11 @@ public class AbstractGridTest {
         public TestSize invert() {
             return new TestSize(-1);
         }
+
+        @Override
+        public int count() {
+            return size;
+        }
     }
 
     protected static class TestGrid extends AbstractGrid<TestPoint, TestSize, String> {
