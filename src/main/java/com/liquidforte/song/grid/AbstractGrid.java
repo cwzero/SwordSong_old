@@ -35,20 +35,11 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
 
     protected <T extends java.util.EventListener, E> E fireEvent(Class<T> listenerClass, BiPredicate<T, E> filter, BiConsumer<T, E> handler, E event) {
         Executor executor = ForkJoinPool.commonPool();
-        for (T listener: listeners.getListeners(listenerClass)) {
-            if (filter.test(listener, event)) {
-                executor.execute(() -> {
-                    handler.accept(listener, event);
-                });
-            }
-        }
 
-        /*Arrays.stream(listeners.getListeners(listenerClass))
+        Arrays.stream(listeners.getListeners(listenerClass))
                 .filter(it -> filter.test(it, event))
                 .forEach(it -> executor
                         .execute(() -> handler.accept(it, event)));
-
-         */
         return event;
     }
 
@@ -84,10 +75,7 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
         V result = doPutValue(p, v);
 
         if (currentValue == null) {
-            var event = new DefaultGridAddEvent<>(this, p, v);
-            fireGridEvent(event);
-            fireGridPointEvent(event);
-            fireGridAddEvent(event);
+            fireGridAddEvent(new DefaultGridAddEvent<>(this, p, v));
         } else if (v == null) {
             fireGridRemoveEvent(new DefaultGridRemoveEvent<>(this, p, currentValue));
         } else {
