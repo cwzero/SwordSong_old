@@ -26,6 +26,14 @@ public class SpaceGrid extends ArrayTileGrid {
         return (Space) getTile(x, y);
     }
 
+    public synchronized void setBackground(Tile tile, int x, int y) {
+        if (tile instanceof Space) {
+            setTile(tile, x, y);
+        } else {
+            createSpace(x, y).setBackground(tile);
+        }
+    }
+
     @Override
     protected Tile doGetTile(int x, int y) {
         return super.doGetTile(x, y);
@@ -37,7 +45,7 @@ public class SpaceGrid extends ArrayTileGrid {
     }
 
     @Override
-    public void drawArea(TileGridAccess grid, int yourOffsetX, int yourOffsetY, int myOffsetX, int myOffsetY, int width, int height) {
+    public synchronized void drawArea(TileGridAccess grid, int yourOffsetX, int yourOffsetY, int myOffsetX, int myOffsetY, int width, int height) {
         int myWidth = getWidth() - myOffsetX;
         int myHeight = getHeight() - myOffsetY;
 

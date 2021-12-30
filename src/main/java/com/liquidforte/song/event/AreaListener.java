@@ -17,6 +17,6 @@ public abstract class AreaListener implements GridUpdateListener {
 
     @Override
     public boolean filter(GridUpdateEvent event) {
-        return contains(event.x - this.x, event.y - this.y);
+        return event instanceof GridTileUpdateEvent t && contains(t.x - this.x, t.y - this.y);
     }
 }

@@ -1,7 +1,7 @@
 package com.liquidforte.song.grid;
 
+import com.liquidforte.song.event.GridTileUpdateEvent;
 import com.liquidforte.song.event.GridUpdateEvent;
-import com.liquidforte.song.tile.Tile;
 import com.liquidforte.song.tile.Tile;
 
 public class OffsetTileGrid extends DelegatingTileGrid {
@@ -15,7 +15,7 @@ public class OffsetTileGrid extends DelegatingTileGrid {
 
     @Override
     public boolean filter(GridUpdateEvent event) {
-        return contains(event.x - offsetX, event.y - offsetY);
+        return event instanceof GridTileUpdateEvent e && contains(e.x - offsetX, e.y - offsetY);
     }
 
     protected void setOffsetX(int offsetX) {

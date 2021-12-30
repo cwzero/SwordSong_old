@@ -1,10 +1,9 @@
 package com.liquidforte.song.grid;
 
 import com.liquidforte.song.block.Block;
-import com.liquidforte.song.event.AreaListener;
-import com.liquidforte.song.event.GridUpdateEvent;
-import com.liquidforte.song.event.GridUpdateListener;
-import com.liquidforte.song.event.TileUpdateListener;
+import com.liquidforte.song.event.*;
+import com.liquidforte.song.space.Space;
+import com.liquidforte.song.space.SpaceGrid;
 import com.liquidforte.song.tile.ListenTile;
 import com.liquidforte.song.tile.Tile;
 import com.liquidforte.song.util.TileUtil;
@@ -78,12 +77,16 @@ public abstract class AbstractTileGrid extends KeyAdapter implements TileGrid {
         return null;
     }
 
+    public void fireUpdate() {
+        fireUpdate(new GridUpdateEvent(this));
+    }
+
     protected void fireUpdate(Tile oldTile, Tile newTile, int x, int y) {
-        fireUpdate(new GridUpdateEvent(this, oldTile, newTile, x, y));
+        fireUpdate(new GridTileUpdateEvent(this, oldTile, newTile, x, y));
     }
 
     protected void fireUpdate(Tile oldTile, Tile newTile, Point pos) {
-        fireUpdate(new GridUpdateEvent(this, oldTile, newTile, pos.x, pos.y));
+        fireUpdate(new GridTileUpdateEvent(this, oldTile, newTile, pos.x, pos.y));
     }
 
     protected void fireUpdate(GridUpdateEvent event) {
@@ -128,6 +131,32 @@ public abstract class AbstractTileGrid extends KeyAdapter implements TileGrid {
                 Tile source = getTile(x + myOffsetX, y + myOffsetY);
                 if (source != null) {
                     graphics.drawImage(source.getTexture(), x * 16 + yourOffsetX, y * 16 + yourOffsetY, null);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void drawArea(SpaceGrid grid, int yourOffsetX, int yourOffsetY, int myOffsetX, int myOffsetY, int width, int height) {
+        int myWidth = getWidth() - myOffsetX;
+        int myHeight = getHeight() - myOffsetY;
+
+        int yourWidth = grid.getWidth() - yourOffsetX;
+        int yourHeight = grid.getHeight() - yourOffsetY;
+
+        int runWidth = Math.min(myWidth, yourWidth);
+        int runHeight = Math.min(myHeight, yourHeight);
+
+        for (int x = 0; x < runWidth; x++) {
+            for (int y = 0; y < runHeight; y++) {
+                Tile source = getTile(x + myOffsetX, y + myOffsetY);
+                if (source != null) {
+                    if (source instanceof Space) {
+                        grid.setTile(source, x + yourOffsetX, y + yourOffsetY);
+                    } else {
+                        Space space = grid.createSpace(x + yourOffsetX, y + yourOffsetY);
+                        space.setBackground(source);
+                    }
                 }
             }
         }

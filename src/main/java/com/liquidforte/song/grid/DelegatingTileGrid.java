@@ -1,8 +1,8 @@
 package com.liquidforte.song.grid;
 
+import com.liquidforte.song.event.GridTileUpdateEvent;
 import com.liquidforte.song.event.GridUpdateEvent;
 import com.liquidforte.song.event.GridUpdateListener;
-import com.liquidforte.song.tile.Tile;
 import com.liquidforte.song.tile.Tile;
 
 public class DelegatingTileGrid extends AbstractTileGrid implements GridUpdateListener {
@@ -15,12 +15,12 @@ public class DelegatingTileGrid extends AbstractTileGrid implements GridUpdateLi
 
     @Override
     public boolean filter(GridUpdateEvent event) {
-        return contains(event.x, event.y);
+        return event instanceof GridTileUpdateEvent e && contains(e.x, e.y);
     }
 
     @Override
     public void gridUpdate(GridUpdateEvent event) {
-        fireUpdate(event.oldTile, event.newTile, event.x, event.y);
+        fireUpdate(event);
     }
 
     @Override

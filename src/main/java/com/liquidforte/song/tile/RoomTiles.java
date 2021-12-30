@@ -4,7 +4,7 @@ import com.liquidforte.song.util.Tileset;
 
 import java.awt.*;
 
-public class WallTiles extends FloorTiles {
+public class RoomTiles extends FloorTiles {
     private final Color wallColor;
 
     public Tile wallCornerNEBlank;
@@ -57,11 +57,12 @@ public class WallTiles extends FloorTiles {
     public Tile wallHalfSouthDense;
     public Tile wallHalfWestDense;
 
-    public WallTiles(Color floorColor, Color floorDecorationColor, Color wallColor) {
+    // TODO: color schemes
+    public RoomTiles(Color floorColor, Color floorDecorationColor, Color wallColor) {
         this(Color.black, floorColor, floorDecorationColor, wallColor);
     }
 
-    public WallTiles(Color backgroundColor, Color floorColor, Color floorDecorationColor, Color wallColor) {
+    public RoomTiles(Color backgroundColor, Color floorColor, Color floorDecorationColor, Color wallColor) {
         super(backgroundColor, floorColor, floorDecorationColor);
         this.wallColor = wallColor;
 

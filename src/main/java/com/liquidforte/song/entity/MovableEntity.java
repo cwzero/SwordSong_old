@@ -7,10 +7,12 @@ import com.liquidforte.song.tile.ColoredTile;
 
 import java.awt.*;
 
-public class MovableEntity extends Block {
+public class MovableEntity extends Block implements Movable {
     private final LayeredSpaceGrid world;
-    private int x, y, z;
     private final ColoredTile tile;
+    private final PositionPointer pos;
+    private final PositionPointer movePointer;
+    private int x, y, z;
     private boolean placed = false;
 
     public MovableEntity(LayeredSpaceGrid world, ColoredTile tile) {
@@ -21,6 +23,8 @@ public class MovableEntity extends Block {
         super(tile, solid);
         this.world = world;
         this.tile = tile;
+        this.pos = new PositionPointer(world, solid);
+        this.movePointer = new PositionPointer(world, solid);
     }
 
     public void setColor(Color color) {
@@ -29,6 +33,21 @@ public class MovableEntity extends Block {
 
     public Color getColor() {
         return tile.getColor();
+    }
+
+    @Override
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+    @Override
+    public int getZ() {
+        return 0;
     }
 
     public Space getSpace() {
@@ -57,6 +76,7 @@ public class MovableEntity extends Block {
         return !isPlaced() && canMoveTo(space);
     }
 
+    @Override
     public boolean moveTo(int x, int y, int z) {
         if (canMoveTo(x, y, z) && remove()) {
             this.x = x;
@@ -78,22 +98,6 @@ public class MovableEntity extends Block {
             return moveEast();
         }
         return false;
-    }
-
-    public boolean moveNorth() {
-        return moveTo(x, y-1, z);
-    }
-
-    public boolean moveEast() {
-        return moveTo(x+1, y, z);
-    }
-
-    public boolean moveSouth() {
-        return moveTo(x, y+1, z);
-    }
-
-    public boolean moveWest() {
-        return moveTo(x-1, y, z);
     }
 
     public boolean place() {

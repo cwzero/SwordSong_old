@@ -1,6 +1,7 @@
 package com.liquidforte.song.space;
 
 import com.liquidforte.song.block.Block;
+import com.liquidforte.song.block.RoomBlock;
 import com.liquidforte.song.event.TileUpdateEvent;
 import com.liquidforte.song.tile.LayeredTile;
 import com.liquidforte.song.tile.ListenTile;
@@ -34,8 +35,14 @@ public class Space extends Block {
 
         if (foreground != null) {
             layers.add(foreground);
+            if (background instanceof RoomBlock b) {
+                layers.add(b.smooth());
+            }
         } else if (!middle.isEmpty()) {
             layers.add(middle.peek());
+            if (background instanceof RoomBlock b) {
+                layers.add(b.smooth());
+            }
         } else if (background != null) {
             layers.add(background);
         }

@@ -1,8 +1,14 @@
 package com.liquidforte.song.grid;
 
+import com.liquidforte.song.space.SpaceGrid;
+
 import java.awt.*;
 
 public interface GridDrawing extends TileGridAccess {
+    default void draw(SpaceGrid grid, int yourOffsetX, int yourOffsetY) {
+        drawArea(grid, yourOffsetX, yourOffsetY, 0, 0, getWidth(), getHeight());
+    }
+
     default void draw(TileGridAccess grid, int yourOffsetX, int yourOffsetY) {
         drawArea(grid, yourOffsetX, yourOffsetY, 0, 0, getWidth(), getHeight());
     }
@@ -34,6 +40,8 @@ public interface GridDrawing extends TileGridAccess {
     }
 
     void drawArea(TileGridAccess grid, int yourOffsetX, int yourOffsetY, int myOffsetX, int myOffsetY, int width, int height);
+
+    void drawArea(SpaceGrid grid, int yourOffsetX, int yourOffsetY, int myOffsetX, int myOffsetY, int width, int height);
 
     default void drawArea(TileGridAccess grid, Point myOffset, Point yourOffset, Dimension size) {
         drawArea(grid, yourOffset.x, yourOffset.y, myOffset.x, myOffset.y, size.width, size.height);

@@ -11,7 +11,7 @@ public class Block extends TileContainer {
     }
 
     public Block(boolean solid) {
-
+        this.solid = solid;
     }
 
     public Block(Tile tile) {
