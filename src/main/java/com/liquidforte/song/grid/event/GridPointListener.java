@@ -3,7 +3,7 @@ package com.liquidforte.song.grid.event;
 import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Size;
 
-public interface GridPointListener<P extends Point, S extends Size<P>, V> extends GridListener<P, S, V> {
+public interface GridPointListener<P extends Point<P>, S extends Size<P, S>, V> extends GridListener<P, S, V> {
     void handlePointEvent(GridPointEvent<P, S, V> event);
 
     default boolean filterPointEvent(GridPointEvent<P, S, V> event) {

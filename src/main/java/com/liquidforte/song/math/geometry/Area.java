@@ -6,12 +6,12 @@ import java.util.stream.Stream;
     A bidirectional function between two different point representations in the same dimension
     A cuboid with its own reference space
  */
-public interface Area<P extends Point, S extends Size<P>> extends Cuboid<P, S> {
+public interface Area<P extends Point<P>, S extends Size<P, S>> extends Cuboid<P, S> {
     P getInternalOffset();
 
-    P transformEnter(P p);
+    P transformExternal(P p);
 
-    P transformExit(P p);
+    P transformInternal(P p);
 
     boolean containsExternal(P p);
 
@@ -20,4 +20,9 @@ public interface Area<P extends Point, S extends Size<P>> extends Cuboid<P, S> {
     Stream<P> streamExternal();
 
     Stream<P> streamInternal();
+
+    @Override
+    default boolean contains(P point) {
+        return containsInternal(point);
+    }
 }

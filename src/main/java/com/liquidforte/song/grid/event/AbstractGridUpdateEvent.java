@@ -4,7 +4,7 @@ import com.liquidforte.song.grid.Grid;
 import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Size;
 
-public abstract class AbstractGridUpdateEvent<P extends Point, S extends Size<P>, V> extends AbstractGridPointEvent<P, S, V> implements GridUpdateEvent<P, S, V> {
+public abstract class AbstractGridUpdateEvent<P extends Point<P>, S extends Size<P, S>, V> extends AbstractGridPointEvent<P, S, V> implements GridUpdateEvent<P, S, V> {
     private final V removed;
     private final V added;
 

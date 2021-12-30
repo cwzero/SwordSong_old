@@ -5,7 +5,7 @@ import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Size;
 
 @SuppressWarnings("unchecked")
-public interface GridEventSource<P extends Point, S extends Size<P>, V> extends EventSource {
+public interface GridEventSource<P extends Point<P>, S extends Size<P, S>, V> extends EventSource {
     default void addGridListener(GridListener<P, S, V> listener) {
         addGridListener(GridListener.class, listener);
     }

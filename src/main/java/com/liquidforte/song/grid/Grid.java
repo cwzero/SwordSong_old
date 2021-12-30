@@ -12,7 +12,7 @@ import com.liquidforte.song.pointer.SourcePointer;
 import java.util.Map;
 import java.util.Set;
 
-public interface Grid<P extends Point, S extends Size<P>, V> extends Map<P, V>, Source<P, V>, Destination<P, V>, GridEventSource<P, S, V>, Sized<P, S> {
+public interface Grid<P extends Point<P>, S extends Size<P, S>, V> extends Map<P, V>, Source<P, V>, Destination<P, V>, GridEventSource<P, S, V>, Sized<P, S> {
     interface GridEntrySet<P, V> extends Set<Map.Entry<P, V>> {
 
     }

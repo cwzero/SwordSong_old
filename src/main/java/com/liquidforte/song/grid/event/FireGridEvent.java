@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
 @SuppressWarnings("unchecked")
-public interface FireGridEvent<P extends Point, S extends Size<P>, V> {
+public interface FireGridEvent<P extends Point<P>, S extends Size<P, S>, V> {
     <T extends GridListener<P, S, V>, E extends GridEvent<P, S, V>> E fireGridEvent(Class<T> listenerClass, BiPredicate<T, E> filter, BiConsumer<T, E> handler, E event);
 
     default GridEvent<P, S, V> fireGridEvent(GridEvent<P, S, V> event) {

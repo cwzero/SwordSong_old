@@ -5,6 +5,6 @@ import com.liquidforte.song.grid.Grid;
 import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Size;
 
-public interface GridEvent<P extends Point, S extends Size<P>, V> extends Event {
+public interface GridEvent<P extends Point<P>, S extends Size<P, S>, V> extends Event {
     Grid<P, S, V> getSource();
 }

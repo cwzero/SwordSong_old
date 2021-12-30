@@ -16,7 +16,7 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extends AbstractMap<P, V> implements Grid<P, S, V>, FireGridEvent<P, S, V> {
+public abstract class AbstractGrid<P extends Point<P>, S extends Size<P, S>, V> extends AbstractMap<P, V> implements Grid<P, S, V>, FireGridEvent<P, S, V> {
     private final EventListenerList listeners = new EventListenerList();
 
     @Override
@@ -95,6 +95,11 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
 
     @Override
     public abstract boolean containsKey(Object key);
+
+    @Override
+    public boolean contains(P point) {
+        return getSize().contains(point);
+    }
 
     protected abstract Stream<P> keyStream();
 

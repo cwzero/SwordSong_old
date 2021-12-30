@@ -10,19 +10,37 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class AbstractGridTest {
-    protected static record TestPoint(int x) implements Point {
-
-    }
-
-    protected static record TestSize(int size) implements Size<TestPoint> {
+    protected static record TestPoint(int x) implements Point<TestPoint> {
         @Override
-        public Set<TestPoint> getPointSet() {
-            return getPointStream().collect(Collectors.toSet());
+        public TestPoint add(TestPoint other) {
+            return new TestPoint(this.x + other.x);
         }
 
         @Override
+        public TestPoint invert() {
+            return new TestPoint(-x);
+        }
+    }
+
+    protected static record TestSize(int size) implements Size<TestPoint, TestSize> {
+        @Override
         public Stream<TestPoint> getPointStream() {
             return IntStream.rangeClosed(0, size).boxed().map(TestPoint::new);
+        }
+
+        @Override
+        public boolean contains(TestPoint point) {
+            return point.x >= 0 && point.x < size;
+        }
+
+        @Override
+        public TestSize add(TestSize other) {
+            return new TestSize(this.size + other.size);
+        }
+
+        @Override
+        public TestSize invert() {
+            return new TestSize(-1);
         }
     }
 
@@ -64,7 +82,7 @@ public class AbstractGridTest {
         @Override
         public boolean containsKey(Object key) {
             if (key instanceof TestPoint p) {
-                return p.x >= 0 && p.x < grid.length;
+                return contains(p);
             }
             return false;
         }
