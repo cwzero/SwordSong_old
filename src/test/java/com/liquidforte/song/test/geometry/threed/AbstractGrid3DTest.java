@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
-public class TestAbstractGrid3D {
+public class AbstractGrid3DTest {
     @Mock
     private Grid3DListener<TestGrid, Object> listener;
     @Mock

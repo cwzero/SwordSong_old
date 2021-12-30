@@ -92,31 +92,36 @@ public abstract class AbstractGrid2D<G extends Grid2D<G, V>, V> extends Abstract
         if (current == null) {
             Grid2DAddEvent<G, V> event = new Grid2DAddEvent<>((G) this, pos, v);
             fireEvent(Grid2DListener.class, Grid2DListener::filterEvent, Grid2DListener::handleEvent, event);
-            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handleEvent, event);
+            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handlePointEvent, event);
             fireEvent(Grid2DAddListener.class, Grid2DAddListener::filterAddEvent, Grid2DAddListener::handleAddEvent, event);
 
             cancelled = event.isCancelled();
         } else if (v == null) {
             Grid2DRemoveEvent<G, V> event = new Grid2DRemoveEvent<>((G) this, pos, current);
             fireEvent(Grid2DListener.class, Grid2DListener::filterEvent, Grid2DListener::handleEvent, event);
-            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handleEvent, event);
+            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handlePointEvent, event);
             fireEvent(Grid2DRemoveListener.class, Grid2DRemoveListener::filterRemoveEvent, Grid2DRemoveListener::handleRemoveEvent, event);
+
+            Grid2DUpdateEvent<G, V> updateEvent = new Grid2DUpdateEvent<>((G) this, pos, current, null);
+            fireEvent(Grid2DListener.class, Grid2DListener::filterEvent, Grid2DListener::handleEvent, updateEvent);
+            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handlePointEvent, updateEvent);
+            fireEvent(Grid2DUpdateListener.class, Grid2DUpdateListener::filterUpdateEvent, Grid2DUpdateListener::handleUpdateEvent, updateEvent);
 
             cancelled = event.isCancelled();
         } else {
             Grid2DRemoveEvent<G, V> removeEvent = new Grid2DRemoveEvent<>((G) this, pos, current);
             fireEvent(Grid2DListener.class, Grid2DListener::filterEvent, Grid2DListener::handleEvent, removeEvent);
-            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handleEvent, removeEvent);
+            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handlePointEvent, removeEvent);
             fireEvent(Grid2DRemoveListener.class, Grid2DRemoveListener::filterRemoveEvent, Grid2DRemoveListener::handleRemoveEvent, removeEvent);
 
             Grid2DAddEvent<G, V> addEvent = new Grid2DAddEvent<>((G) this, pos, v);
             fireEvent(Grid2DListener.class, Grid2DListener::filterEvent, Grid2DListener::handleEvent, addEvent);
-            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handleEvent, addEvent);
+            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handlePointEvent, addEvent);
             fireEvent(Grid2DAddListener.class, Grid2DAddListener::filterAddEvent, Grid2DAddListener::handleAddEvent, addEvent);
 
             Grid2DUpdateEvent<G, V> updateEvent = new Grid2DUpdateEvent<>((G) this, pos, current, v);
             fireEvent(Grid2DListener.class, Grid2DListener::filterEvent, Grid2DListener::handleEvent, updateEvent);
-            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handleEvent, updateEvent);
+            fireEvent(Grid2DPointListener.class, Grid2DPointListener::filterPointEvent, Grid2DPointListener::handlePointEvent, updateEvent);
             fireEvent(Grid2DUpdateListener.class, Grid2DUpdateListener::filterUpdateEvent, Grid2DUpdateListener::handleUpdateEvent, updateEvent);
 
             cancelled = removeEvent.isCancelled() || addEvent.isCancelled() || updateEvent.isCancelled();
