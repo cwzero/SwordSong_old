@@ -1,10 +1,13 @@
 package com.liquidforte.song.grid;
 
 import com.liquidforte.song.event.EventListener;
+import com.liquidforte.song.grid.event.FireGridEvent;
 import com.liquidforte.song.grid.event.GridEvent;
 import com.liquidforte.song.grid.event.GridListener;
 import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Size;
+import com.liquidforte.song.pointer.DestinationPointer;
+import com.liquidforte.song.pointer.SourcePointer;
 
 import javax.swing.event.EventListenerList;
 import java.util.*;
@@ -12,8 +15,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extends AbstractMap<P, V> implements Grid<P, S, V> {
+public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extends AbstractMap<P, V> implements Grid<P, S, V>, FireGridEvent<P, S, V> {
     private final EventListenerList listeners = new EventListenerList();
 
     @Override
@@ -26,7 +31,7 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
         listeners.remove(listenerClass, listener);
     }
 
-    protected <T extends GridListener<P, V>, E extends GridEvent<P, V>> E fireGridEvent(Class<T> listenerClass, BiPredicate<T, E> filter, BiConsumer<T, E> handler, E event) {
+    public <T extends GridListener<P, S, V>, E extends GridEvent<P, S, V>> E fireGridEvent(Class<T> listenerClass, BiPredicate<T, E> filter, BiConsumer<T, E> handler, E event) {
         return fireEvent(listenerClass, filter, handler, event);
     }
 
@@ -73,7 +78,9 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
     @Override
     public abstract V remove(Object key);
 
-    protected abstract V doRemove(P p);
+    protected V doRemove(P p) {
+        return doPutValue(p, null);
+    }
 
     @Override
     public V removeKey(P p) {
@@ -81,7 +88,26 @@ public abstract class AbstractGrid<P extends Point, S extends Size<P>, V> extend
     }
 
     @Override
-    public abstract Set<P> keySet();
+    public Set<P> keySet() {
+        return keyStream().collect(Collectors.toSet());
+    }
+
+    protected abstract Stream<P> keyStream();
+
+    @Override
+    public Set<Entry<P, V>> entrySet() {
+        return new GridEntrySet();
+    }
+
+    @Override
+    public DestinationPointer<P, V> getDestinationPointer(P p) {
+        return new GridEntry(p);
+    }
+
+    @Override
+    public SourcePointer<P, V> getSourcePointer(P p) {
+        return new GridEntry(p);
+    }
 
     public class GridEntrySet extends AbstractSet<Entry<P, V>> implements Grid.GridEntrySet<P, V> {
         @Override
