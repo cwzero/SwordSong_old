@@ -1,5 +1,6 @@
 package com.liquidforte.song.math.geometry.two;
 
+/*
 import com.liquidforte.song.math.geometry.Point;
 
 public record Point2D(int x, int y) implements Point<Point2D>, Vector2D<Point2D>, Located2D {
@@ -13,3 +14,4 @@ public record Point2D(int x, int y) implements Point<Point2D>, Vector2D<Point2D>
         return new Point2D(-x, -y);
     }
 }
+*/

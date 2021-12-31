@@ -1,11 +1,11 @@
 package com.liquidforte.song.math.geometry.three;
 
-import com.liquidforte.song.math.geometry.Area;
+import com.liquidforte.song.math.geometry.Space;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public record Area3D(Point3D location, Size3D size, Point3D internalOffset) implements Area<Point3D, Size3D>, Cube {
+public record Space3D(Point3D location, Size3D size, Point3D internalOffset) implements Space<Point3D, Size3D>, Cube {
     @Override
     public Point3D getInternalOffset() {
         return internalOffset;

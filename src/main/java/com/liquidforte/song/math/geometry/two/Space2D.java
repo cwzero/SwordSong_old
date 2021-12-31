@@ -1,12 +1,12 @@
 package com.liquidforte.song.math.geometry.two;
 
-import com.liquidforte.song.math.geometry.Area;
+import com.liquidforte.song.math.geometry.Space;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public record Area2D(Point2D location, Size2D size,
-                     Point2D internalOffset) implements Area<Point2D, Size2D>, Rectangle {
+public record Space2D(Point2D location, Size2D size,
+                      Point2D internalOffset) implements Space<Point2D, Size2D>, Rectangle {
     @Override
     public Point2D getInternalOffset() {
         return internalOffset;

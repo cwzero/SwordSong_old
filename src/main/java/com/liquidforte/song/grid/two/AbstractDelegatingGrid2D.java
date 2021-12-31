@@ -1,5 +1,6 @@
 package com.liquidforte.song.grid.two;
 
+/*
 import com.liquidforte.song.grid.AbstractDelegatingGrid;
 import com.liquidforte.song.grid.Grid;
 import com.liquidforte.song.math.geometry.two.Point2D;
@@ -14,3 +15,4 @@ public abstract class AbstractDelegatingGrid2D<V> extends AbstractDelegatingGrid
         super(delegate);
     }
 }
+*/

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class Area2DTest {
+class Space2DTest {
     private Area2D area;
 
     @BeforeEach

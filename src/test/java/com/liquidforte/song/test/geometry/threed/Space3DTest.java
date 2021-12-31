@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class Area3DTest {
+class Space3DTest {
     private Area3D area;
 
     @BeforeEach

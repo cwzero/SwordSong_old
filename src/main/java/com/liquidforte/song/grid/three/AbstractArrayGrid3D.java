@@ -2,7 +2,7 @@ package com.liquidforte.song.grid.three;
 
 import com.liquidforte.song.math.geometry.three.Point3D;
 import com.liquidforte.song.math.geometry.three.Size3D;
-
+/*
 public abstract class AbstractArrayGrid3D<V> extends AbstractGrid3D<V> {
     private final V[][][] grid;
 
@@ -27,3 +27,4 @@ public abstract class AbstractArrayGrid3D<V> extends AbstractGrid3D<V> {
         return new Size3D(grid.length, grid[0].length, grid[0][0].length);
     }
 }
+*/
