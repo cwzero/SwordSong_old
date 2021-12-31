@@ -3,56 +3,41 @@ package com.liquidforte.song.math.geometry;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public interface VectorSet<V extends Vector<V>> {
+@SuppressWarnings("unchecked")
+public interface VectorSet<S extends VectorSet<S, V>, V extends Vector<V>> {
     V construct(int... components);
 
     default V getOrigin() {
         return construct();
     }
 
-    default V construct(V v) {
-        int[] components = new int[v.getDimensions()];
-        for (int axis = 0; axis < v.getDimensions(); axis++) {
-            components[axis] = v.getComponent(axis);
-        }
-        return construct(components);
-    }
+    V construct(V v);
 
     default int getDimensions() {
         return getOrigin().getDimensions();
     }
 
-    default VectorSet<V> constrain(Constrain<V> constraint) {
-        return constraint.apply(this);
+    default S constrain(Constrain<V> constraint) {
+        return map(constraint);
     }
 
-    default VectorSet<V> offset(Offset<V> offset) {
-        return offset.apply(this);
+    default S offset(Offset<V> offset) {
+        return map(offset);
     }
 
-    default VectorSet<V> map(Function<V, V> mapFn) {
-        return components -> mapFn.apply(construct(components));
-    }
+    S map(Function<V, V> mapFn);
 
-    default VectorSet<V> filter(Predicate<V> filterFn) {
-        return components -> {
-            V result = construct(components);
-            if (filterFn.test(result)) {
-                return result;
-            }
-            return null;
-        };
-    }
+    S filter(Predicate<V> filterFn);
 
-    default VectorSet<V> add(V other) {
+    default S add(V other) {
         return map(v -> v.add(other));
     }
 
-    default VectorSet<V> scale(double scalar) {
+    default S scale(double scalar) {
         return map(v -> v.scale(scalar));
     }
 
-    default VectorSet<V> subtract(V other) {
+    default S subtract(V other) {
         return map(v -> v.subtract(other));
     }
 }

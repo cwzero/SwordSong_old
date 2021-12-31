@@ -6,6 +6,9 @@ public interface Constrain<V extends Vector<V>> extends VectorOperation<V> {
 
     @Override
     default V apply(V v) {
-        return match(v) ? v : null;
+        if (match(v)) {
+            return v;
+        }
+        return null;
     }
 }

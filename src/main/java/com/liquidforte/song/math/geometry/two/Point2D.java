@@ -1,8 +1,9 @@
 package com.liquidforte.song.math.geometry.two;
 
+import com.liquidforte.song.math.geometry.Offset;
 import com.liquidforte.song.math.geometry.Point;
 
-public record Point2D(int x, int y) implements Vector2D<Point2D>, Point<Point2D> {
+public record Point2D(int x, int y) implements Vector2D<Point2D>, Point<Point2D>, Offset<Point2D> {
     @Override
     public Point2D add(Point2D other) {
         return new Point2D(this.x + other.x, this.y + other.y);
@@ -36,11 +37,20 @@ public record Point2D(int x, int y) implements Vector2D<Point2D>, Point<Point2D>
         return null;
     }
 
+    public static Point2D of(Point2D other) {
+        return of(other.x, other.y);
+    }
+
     public static Point2D of(int x, int y) {
         return new Point2D(x, y);
     }
 
     public static Point2D origin() {
         return of(0, 0);
+    }
+
+    @Override
+    public Point2D getOffset() {
+        return this;
     }
 }
