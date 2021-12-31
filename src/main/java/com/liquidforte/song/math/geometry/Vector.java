@@ -11,15 +11,7 @@ public interface Vector<V extends Vector<V>> {
         return add(scale(-1));
     }
 
-    int component(int axis);
+    int getComponent(int axis);
 
-    int[] components(int[] axis);
-
-    int[] components();
-
-    int dimensions();
-
-    V withComponent(int axis, int component);
-
-    V withComponents(int[] axis, int[] component);
+    int getDimensions();
 }
