@@ -22,12 +22,20 @@ public interface VectorSet<V extends Vector<V>> {
         return getOrigin().getDimensions();
     }
 
+    default VectorSet<V> constrain(Constrain<V> constraint) {
+        return constraint.apply(this);
+    }
+
+    default VectorSet<V> offset(Offset<V> offset) {
+        return offset.apply(this);
+    }
+
     default VectorSet<V> map(Function<V, V> mapFn) {
-        return (int... components) -> mapFn.apply(construct(components));
+        return components -> mapFn.apply(construct(components));
     }
 
     default VectorSet<V> filter(Predicate<V> filterFn) {
-        return (int... components) -> {
+        return components -> {
             V result = construct(components);
             if (filterFn.test(result)) {
                 return result;

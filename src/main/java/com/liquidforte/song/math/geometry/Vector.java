@@ -1,6 +1,7 @@
 package com.liquidforte.song.math.geometry;
 
-public interface Vector<V extends Vector<V>> {
+@SuppressWarnings("unchecked")
+public interface Vector<V extends Vector<V>> extends Offset<V> {
     V add(V other);
 
     V scale(double scalar);
@@ -14,4 +15,9 @@ public interface Vector<V extends Vector<V>> {
     int getComponent(int axis);
 
     int getDimensions();
+
+    @Override
+    default V getOffset() {
+        return (V) this;
+    }
 }

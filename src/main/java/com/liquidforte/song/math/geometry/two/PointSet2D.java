@@ -1,18 +1,59 @@
 package com.liquidforte.song.math.geometry.two;
 
-public class PointSet2D implements VectorSet2D<Point2D> {
+import com.liquidforte.song.math.geometry.Constrain;
+import com.liquidforte.song.math.geometry.Offset;
+import com.liquidforte.song.math.geometry.PointSet;
+
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+public interface PointSet2D extends VectorSet2D<Point2D>, PointSet<Point2D> {
     @Override
-    public Point2D construct(int... components) {
-        return Point2D.of(components);
+    default PointSet2D filter(Predicate<Point2D> filterFn) {
+        return components -> {
+            Point2D result = construct(components);
+            if (filterFn.test(result)) {
+                return result;
+            }
+            return null;
+        };
     }
 
     @Override
-    public Point2D getOrigin() {
-        return new Point2D(0, 0);
+    default PointSet2D constrain(Constrain<Point2D> constraint) {
+        return map(constraint::apply);
+    }
+
+    default PointSet2D constrain(int width, int height) {
+        return constrain(Size2D.of(width, height));
     }
 
     @Override
-    public Point2D construct(Point2D point2D) {
-        return new Point2D(point2D.x(), point2D.y());
+    default PointSet2D offset(Offset<Point2D> offset) {
+        return map(offset::apply);
+    }
+
+    default PointSet2D offset(int x, int y) {
+        return offset(Point2D.of(x, y));
+    }
+
+    @Override
+    default PointSet2D map(Function<Point2D, Point2D> mapFn) {
+        return components -> mapFn.apply(construct(components));
+    }
+
+    @Override
+    default PointSet2D add(Point2D other) {
+        return map(p -> p.add(other));
+    }
+
+    @Override
+    default PointSet2D scale(double scalar) {
+        return map(p -> p.scale(scalar));
+    }
+
+    @Override
+    default PointSet2D subtract(Point2D other) {
+        return map(p -> p.subtract(other));
     }
 }
