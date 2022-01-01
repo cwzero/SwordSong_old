@@ -18,6 +18,7 @@ public abstract class AbstractGrid<P extends Point, V> extends AbstractEventSour
         if (p == null) return null;
         V oldValue = getValue(p);
         V newValue = doSetValue(p, v);
+        // TODO: how to propagate to children
         fireEvent(EventListener.class, EventListener::filterEvent, EventListener::handleEvent, constructEvent(p, oldValue, newValue));
         return newValue;
     }

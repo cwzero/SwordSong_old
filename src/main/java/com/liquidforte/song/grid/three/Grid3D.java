@@ -6,6 +6,7 @@ import com.liquidforte.song.math.geometry.Offset;
 import com.liquidforte.song.math.geometry.three.Point3D;
 import com.liquidforte.song.math.geometry.three.PointSet3D;
 import com.liquidforte.song.math.geometry.three.Size3D;
+import com.liquidforte.song.math.geometry.two.Size2D;
 
 import java.util.function.Function;
 import java.util.function.Predicate;

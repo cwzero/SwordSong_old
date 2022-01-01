@@ -10,6 +10,14 @@ import java.util.function.BiPredicate;
 public abstract class AbstractEventSource implements EventSource {
     private final EventListenerList listeners = new EventListenerList();
 
+    protected <E> E fireEvent(E event) {
+        return fireEvent(EventListener.class, event);
+    }
+
+    protected <T extends EventListener, E> E fireEvent(Class<T> listenerClass, E event) {
+        return fireEvent(listenerClass, EventListener::handleEvent, event);
+    }
+
     protected <T extends EventListener, E> E fireEvent(Class<T> listenerClass, BiConsumer<T, E> handler, E event) {
         return fireEvent(listenerClass, EventListener::filterEvent, handler, event);
     }
@@ -23,9 +31,17 @@ public abstract class AbstractEventSource implements EventSource {
         return event;
     }
 
+    public <T extends EventListener> void addListener(T listener) {
+        addListener(EventListener.class, listener);
+    }
+
     @Override
     public <T extends EventListener, L extends T> void addListener(Class<T> listenerClass, L listener) {
         listeners.add(listenerClass, listener);
+    }
+
+    public <T extends EventListener> void removeListener(T listener) {
+        removeListener(EventListener.class, listener);
     }
 
     @Override
