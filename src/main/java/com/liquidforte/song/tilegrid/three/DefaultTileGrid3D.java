@@ -8,10 +8,6 @@ import com.liquidforte.song.tile.Tile;
 public class DefaultTileGrid3D extends AbstractTileGrid3D {
     private final Tile[][][] grid;
 
-    public DefaultTileGrid3D(Size3D size) {
-        this(size.width(), size.height(), size.depth());
-    }
-
     public DefaultTileGrid3D(int width, int height, int depth) {
         this(Point3D.space.filter(new Size3D(width, height, depth)), new Tile[width][height][depth]);
     }

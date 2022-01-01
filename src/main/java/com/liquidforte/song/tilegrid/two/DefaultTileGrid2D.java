@@ -8,10 +8,6 @@ import com.liquidforte.song.tile.Tile;
 public class DefaultTileGrid2D extends AbstractTileGrid2D {
     private final Tile[][] grid;
 
-    public DefaultTileGrid2D(Size2D size) {
-        this(size.width(), size.height());
-    }
-
     public DefaultTileGrid2D(int width, int height) {
         this(Point2D.space.filter(new Size2D(width, height)), new Tile[width][height]);
     }

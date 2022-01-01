@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public interface PointSet3D extends VectorSet3D<Point3D>, PointSet<Point3D> {
     default Point3D construct(int x, int y, int z) {
-        return new Point3D(x, y, z);
+        return construct(new Point3D(x, y, z));
     }
 
     @Override
