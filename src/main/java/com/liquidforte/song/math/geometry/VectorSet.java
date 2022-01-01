@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 public interface VectorSet<V extends Vector> extends VectorOperations<V> {
     V construct(V input);
 
-    default V getOrigin() {
+    default V getZero() {
         return construct(null);
     }
 

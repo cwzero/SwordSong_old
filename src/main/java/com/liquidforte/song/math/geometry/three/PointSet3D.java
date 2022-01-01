@@ -9,6 +9,17 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public interface PointSet3D extends VectorSet3D<Point3D>, PointSet<Point3D> {
+    PointSet3D SPACE = input -> input;
+
+    default Point3D construct(int x, int y, int z) {
+        return new Point3D(x, y, z);
+    }
+
+    @Override
+    default Point3D getZero() {
+        return new Point3D(0, 0, 0);
+    }
+
     @Override
     default VectorOperation<Point3D, Point3D, Point3D> add() {
         return Point3D::add;

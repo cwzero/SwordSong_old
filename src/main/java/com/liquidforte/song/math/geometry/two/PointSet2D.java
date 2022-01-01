@@ -9,14 +9,20 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public interface PointSet2D extends VectorSet2D<Point2D>, PointSet<Point2D> {
+    PointSet2D SPACE = input -> input;
+
+    default Point2D construct(int x, int y) {
+        return construct(new Point2D(x, y));
+    }
+
     @Override
     default VectorOperation<Point2D, Point2D, Point2D> subtract() {
         return Point2D::subtract;
     }
 
     @Override
-    default Point2D getOrigin() {
-        return construct(new Point2D(0, 0));
+    default Point2D getZero() {
+        return new Point2D(0, 0);
     }
 
     @Override

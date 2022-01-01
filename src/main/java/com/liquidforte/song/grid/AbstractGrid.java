@@ -14,6 +14,8 @@ public abstract class AbstractGrid<P extends Point, V> extends AbstractEventSour
 
     @Override
     public V setValue(P p, V v) {
+        p = construct(p);
+        if (p == null) return null;
         V oldValue = getValue(p);
         V newValue = doSetValue(p, v);
         fireEvent(EventListener.class, EventListener::filterEvent, EventListener::handleEvent, constructEvent(p, oldValue, newValue));
@@ -22,6 +24,8 @@ public abstract class AbstractGrid<P extends Point, V> extends AbstractEventSour
 
     @Override
     public V getValue(P p) {
+        p = construct(p);
+        if (p == null) return null;
         return doGetValue(p);
     }
 }

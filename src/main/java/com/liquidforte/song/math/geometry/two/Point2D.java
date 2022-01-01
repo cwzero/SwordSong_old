@@ -5,6 +5,8 @@ import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Vector;
 
 public record Point2D(int x, int y) implements Vector2D, Point, Offset<Point2D> {
+    public static final PointSet2D space = Point2D::new;
+
     public Point2D(Point2D other) {
         this(other.x, other.y);
     }

@@ -7,7 +7,7 @@ import com.liquidforte.song.math.geometry.two.Point2D;
 import com.liquidforte.song.math.geometry.two.PointSet2D;
 
 public abstract class AbstractGrid2D<V> extends AbstractGrid<Point2D, V> implements Grid2D<V> {
-    private final PointSet2D space;
+    protected final PointSet2D space;
 
     public AbstractGrid2D() {
         this(input -> input);

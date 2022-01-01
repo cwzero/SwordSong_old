@@ -7,7 +7,7 @@ import com.liquidforte.song.math.geometry.three.Point3D;
 import com.liquidforte.song.math.geometry.three.PointSet3D;
 
 public abstract class AbstractGrid3D<V> extends AbstractGrid<Point3D, V> implements Grid3D<V> {
-    private final PointSet3D space;
+    protected final PointSet3D space;
 
     public AbstractGrid3D() {
         this(input -> input);

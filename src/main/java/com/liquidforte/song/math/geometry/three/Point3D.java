@@ -5,6 +5,8 @@ import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Vector;
 
 public record Point3D(int x, int y, int z) implements Vector3D, Point, Offset<Point3D> {
+    public static final PointSet3D space = Point3D::new;
+
     public Point3D(Point3D other) {
         this(other.x, other.y, other.z);
     }
