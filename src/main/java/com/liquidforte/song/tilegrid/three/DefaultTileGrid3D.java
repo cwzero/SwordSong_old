@@ -13,7 +13,7 @@ public class DefaultTileGrid3D extends AbstractTileGrid3D {
     }
 
     public DefaultTileGrid3D(int width, int height, int depth) {
-        this(Point3D.space.constrain(width, height, depth), new Tile[width][height][depth]);
+        this(Point3D.space.filter(new Size3D(width, height, depth)), new Tile[width][height][depth]);
     }
 
     public DefaultTileGrid3D(PointSet3D space, Tile[][][] grid) {

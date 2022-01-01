@@ -10,19 +10,19 @@ import java.util.function.BiPredicate;
 public abstract class AbstractEventSource implements EventSource {
     private final EventListenerList listeners = new EventListenerList();
 
-    protected <E> E fireEvent(E event) {
+    public <E> E fireEvent(E event) {
         return fireEvent(EventListener.class, event);
     }
 
-    protected <T extends EventListener, E> E fireEvent(Class<T> listenerClass, E event) {
+    public <T extends EventListener, E> E fireEvent(Class<T> listenerClass, E event) {
         return fireEvent(listenerClass, EventListener::handleEvent, event);
     }
 
-    protected <T extends EventListener, E> E fireEvent(Class<T> listenerClass, BiConsumer<T, E> handler, E event) {
+    public <T extends EventListener, E> E fireEvent(Class<T> listenerClass, BiConsumer<T, E> handler, E event) {
         return fireEvent(listenerClass, EventListener::filterEvent, handler, event);
     }
 
-    protected <T extends EventListener, E> E fireEvent(Class<T> listenerClass, BiPredicate<T, E> filter, BiConsumer<T, E> handler, E event) {
+    public <T extends EventListener, E> E fireEvent(Class<T> listenerClass, BiPredicate<T, E> filter, BiConsumer<T, E> handler, E event) {
         Executor executor = ForkJoinPool.commonPool();
         Arrays.stream(listeners.getListeners(listenerClass))
                 .filter(it -> filter.test(it, event))

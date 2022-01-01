@@ -2,8 +2,6 @@ package com.liquidforte.song.grid;
 
 import com.liquidforte.song.collect.Map;
 import com.liquidforte.song.event.EventSource;
-import com.liquidforte.song.math.geometry.Constrain;
-import com.liquidforte.song.math.geometry.Offset;
 import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.PointSet;
 
@@ -18,15 +16,5 @@ public interface Grid<P extends Point, V> extends EventSource, Map<P, V>, PointS
     Grid<P, V> map(Function<P, P> mapFn);
 
     @Override
-    default Grid<P, V> offset(Offset<P> offset) {
-        return map(offset);
-    }
-
-    @Override
     Grid<P, V> filter(Predicate<P> filterFn);
-
-    @Override
-    default Grid<P, V> constrain(Constrain<P> constrain) {
-        return filter(constrain);
-    }
 }

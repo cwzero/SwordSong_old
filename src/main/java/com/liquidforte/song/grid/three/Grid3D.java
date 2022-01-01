@@ -25,24 +25,4 @@ public interface Grid3D<V> extends Grid<Point3D, V>, PointSet3D {
 
     @Override
     Grid3D<V> filter(Predicate<Point3D> filterFn);
-
-    @Override
-    default Grid3D<V> offset(Offset<Point3D> offset) {
-        return map(offset);
-    }
-
-    @Override
-    default Grid3D<V> offset(int x, int y, int z) {
-        return offset(new Point3D(x, y, z));
-    }
-
-    @Override
-    default Grid3D<V> constrain(Constrain<Point3D> constrain) {
-        return filter(constrain);
-    }
-
-    @Override
-    default Grid3D<V> constrain(int width, int height, int depth) {
-        return constrain(new Size3D(width, height, depth));
-    }
 }

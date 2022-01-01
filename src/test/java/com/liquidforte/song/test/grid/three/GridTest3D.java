@@ -2,6 +2,7 @@ package com.liquidforte.song.test.grid.three;
 
 import com.liquidforte.song.grid.three.Grid3D;
 import com.liquidforte.song.math.geometry.three.Point3D;
+import com.liquidforte.song.math.geometry.three.Size3D;
 import com.liquidforte.song.pointer.DestinationPointer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class GridTest3D extends AbstractGridTest3D {
 
     @Test
     public void constrain() {
-        Grid3D<String> c = grid.constrain(1, 1, 1);
+        Grid3D<String> c = grid.filter(new Size3D(1, 1, 1));
         c.setValue(2, 2, 2, "Test");
         assertThat(c.getValue(2, 2, 2)).isNull();
         c.setValue(0, 0, 0, "Test");
@@ -30,7 +31,7 @@ public class GridTest3D extends AbstractGridTest3D {
 
     @Test
     public void pointer() {
-        Grid3D<String> p = grid.offset(1, 1, 1);
+        Grid3D<String> p = grid.filter(new Size3D(1, 1, 1));
         DestinationPointer<Point3D, String> pointer = p.getDestinationPointer(new Point3D(0, 0, 0));
         pointer.setValue("Test");
         assertThat(grid.getValue(1, 1, 1)).isEqualTo("Test");

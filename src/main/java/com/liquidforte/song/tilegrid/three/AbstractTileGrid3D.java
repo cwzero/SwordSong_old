@@ -1,9 +1,14 @@
 package com.liquidforte.song.tilegrid.three;
 
+import com.liquidforte.song.grid.event.GridEvent2D;
+import com.liquidforte.song.grid.event.GridEvent3D;
 import com.liquidforte.song.grid.three.AbstractGrid3D;
 import com.liquidforte.song.math.geometry.three.Point3D;
 import com.liquidforte.song.math.geometry.three.PointSet3D;
+import com.liquidforte.song.math.geometry.two.Point2D;
 import com.liquidforte.song.tile.Tile;
+import com.liquidforte.song.tilegrid.two.AbstractTileGrid2D;
+import com.liquidforte.song.tilegrid.two.TileGrid2D;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -28,6 +33,27 @@ public abstract class AbstractTileGrid3D extends AbstractGrid3D<Tile> implements
     public TileGrid3D filter(Predicate<Point3D> filterFn) {
         var result = new DelegateTileGrid3D(space.filter(filterFn));
         addListener(result::fireEvent);
+        return result;
+    }
+
+    @Override
+    public TileGrid2D getLayer(int z) {
+        var result = new AbstractTileGrid2D(Point2D.space) {
+            @Override
+            protected Tile doSetValue(Point2D point2D, Tile tile) {
+                return AbstractTileGrid3D.this.setValue(new Point3D(point2D.x(), point2D.y(), z), tile);
+            }
+
+            @Override
+            protected Tile doGetValue(Point2D point2D) {
+                return AbstractTileGrid3D.this.getValue(new Point3D(point2D.x(), point2D.y(), z));
+            }
+        };
+        addListener(event -> {
+            if (event instanceof GridEvent3D e) {
+                result.fireEvent(new GridEvent2D<>(result, new Point2D(e.getLocation().x(), e.getLocation().y()), (Tile)e.getOldValue(), (Tile)e.getNewValue()));
+            }
+        });
         return result;
     }
 

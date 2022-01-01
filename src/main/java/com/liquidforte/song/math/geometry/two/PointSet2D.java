@@ -9,8 +9,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public interface PointSet2D extends VectorSet2D<Point2D>, PointSet<Point2D> {
-    PointSet2D SPACE = input -> input;
-
     default Point2D construct(int x, int y) {
         return construct(new Point2D(x, y));
     }
@@ -18,11 +16,6 @@ public interface PointSet2D extends VectorSet2D<Point2D>, PointSet<Point2D> {
     @Override
     default VectorOperation<Point2D, Point2D, Point2D> subtract() {
         return Point2D::subtract;
-    }
-
-    @Override
-    default Point2D getZero() {
-        return new Point2D(0, 0);
     }
 
     @Override
@@ -46,16 +39,6 @@ public interface PointSet2D extends VectorSet2D<Point2D>, PointSet<Point2D> {
     }
 
     @Override
-    default PointSet2D offset(Offset<Point2D> offset) {
-        return map(offset);
-    }
-
-    @Override
-    default PointSet2D offset(int x, int y) {
-        return offset(new Point2D(x, y));
-    }
-
-    @Override
     default PointSet2D filter(Predicate<Point2D> filterFn) {
         return input -> {
             if (filterFn.test(input)) {
@@ -63,15 +46,5 @@ public interface PointSet2D extends VectorSet2D<Point2D>, PointSet<Point2D> {
             }
             return null;
         };
-    }
-
-    @Override
-    default PointSet2D constrain(Constrain<Point2D> constrain) {
-        return filter(constrain);
-    }
-
-    @Override
-    default PointSet2D constrain(int width, int height) {
-        return constrain(new Size2D(width, height));
     }
 }

@@ -3,6 +3,7 @@ package com.liquidforte.song.test.grid.two;
 import com.liquidforte.song.grid.two.AbstractGrid2D;
 import com.liquidforte.song.math.geometry.two.Point2D;
 import com.liquidforte.song.math.geometry.two.PointSet2D;
+import com.liquidforte.song.math.geometry.two.Size2D;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -12,7 +13,7 @@ public class AbstractGridTest2D {
         private final String[][] grid;
 
         public TestGrid2D(int width, int height) {
-            this(Point2D.space.constrain(width, height), new String[width][height]);
+            this(Point2D.space.filter(new Size2D(width, height)), new String[width][height]);
         }
 
         public TestGrid2D(PointSet2D space, String[][] grid) {
@@ -34,12 +35,12 @@ public class AbstractGridTest2D {
 
         @Override
         public TestGrid2D map(Function<Point2D, Point2D> mapFn) {
-            return new TestGrid2D(space.map(mapFn), grid);
+            return new TestGrid2D(Point2D.space.map(mapFn), grid);
         }
 
         @Override
         public TestGrid2D filter(Predicate<Point2D> filterFn) {
-            return new TestGrid2D(space.filter(filterFn), grid);
+            return new TestGrid2D(Point2D.space.filter(filterFn), grid);
         }
     }
 }

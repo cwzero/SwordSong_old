@@ -3,6 +3,7 @@ package com.liquidforte.song.test.grid.three;
 import com.liquidforte.song.grid.three.AbstractGrid3D;
 import com.liquidforte.song.math.geometry.three.Point3D;
 import com.liquidforte.song.math.geometry.three.PointSet3D;
+import com.liquidforte.song.math.geometry.three.Size3D;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -12,7 +13,7 @@ public class AbstractGridTest3D {
         private final String[][][] grid;
 
         public TestGrid3D(int width, int height, int depth) {
-            this(Point3D.space.constrain(width, height, depth), new String[width][height][depth]);
+            this(Point3D.space.filter(new Size3D(width, height, depth)), new String[width][height][depth]);
         }
 
         public TestGrid3D(PointSet3D space, String[][][] grid) {

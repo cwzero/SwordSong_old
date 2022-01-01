@@ -13,7 +13,7 @@ public class DefaultTileGrid2D extends AbstractTileGrid2D {
     }
 
     public DefaultTileGrid2D(int width, int height) {
-        this(Point2D.space.constrain(width, height), new Tile[width][height]);
+        this(Point2D.space.filter(new Size2D(width, height)), new Tile[width][height]);
     }
 
     public DefaultTileGrid2D(PointSet2D space, Tile[][] grid) {

@@ -5,7 +5,12 @@ import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.Vector;
 
 public record Point2D(int x, int y) implements Vector2D, Point, Offset<Point2D> {
-    public static final PointSet2D space = Point2D::new;
+    public static final PointSet2D space = Point2D::of;
+
+    public static Point2D of(Point2D other) {
+        if (other == null) return null;
+        return new Point2D(other.x, other.y);
+    }
 
     public Point2D(Point2D other) {
         this(other.x, other.y);
@@ -54,6 +59,7 @@ public record Point2D(int x, int y) implements Vector2D, Point, Offset<Point2D> 
 
     @Override
     public Point2D apply(Point2D target) {
+        if (target == null) return null;
         return new Point2D(target.x + this.x, target.y + this.y);
     }
 }

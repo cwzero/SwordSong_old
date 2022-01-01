@@ -1,7 +1,5 @@
 package com.liquidforte.song.math.geometry.three;
 
-import com.liquidforte.song.math.geometry.Constrain;
-import com.liquidforte.song.math.geometry.Offset;
 import com.liquidforte.song.math.geometry.PointSet;
 import com.liquidforte.song.math.geometry.VectorOperation;
 
@@ -9,15 +7,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public interface PointSet3D extends VectorSet3D<Point3D>, PointSet<Point3D> {
-    PointSet3D SPACE = input -> input;
-
     default Point3D construct(int x, int y, int z) {
         return new Point3D(x, y, z);
-    }
-
-    @Override
-    default Point3D getZero() {
-        return new Point3D(0, 0, 0);
     }
 
     @Override
@@ -48,24 +39,5 @@ public interface PointSet3D extends VectorSet3D<Point3D>, PointSet<Point3D> {
             }
             return null;
         };
-    }
-
-    default PointSet3D offset(Offset<Point3D> offset) {
-        return map(offset);
-    }
-
-    @Override
-    default PointSet3D offset(int x, int y, int z) {
-        return offset(new Point3D(x, y, z));
-    }
-
-    @Override
-    default PointSet3D constrain(Constrain<Point3D> constrain) {
-        return filter(constrain);
-    }
-
-    @Override
-    default PointSet3D constrain(int width, int height, int depth) {
-        return constrain(new Size3D(width, height, depth));
     }
 }
