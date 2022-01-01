@@ -1,11 +1,24 @@
 package com.liquidforte.song.math.geometry.three;
 
+import com.liquidforte.song.math.geometry.Offset;
 import com.liquidforte.song.math.geometry.Point;
+import com.liquidforte.song.math.geometry.Vector;
 
-public record Point3D(int x, int y, int z) implements Vector3D<Point3D>, Point<Point3D> {
+public record Point3D(int x, int y, int z) implements Vector3D, Point, Offset<Point3D> {
+    public Point3D(Point3D other) {
+        this(other.x, other.y, other.z);
+    }
+
     @Override
-    public Point3D add(Point3D other) {
-        return new Point3D(this.x + other.x, this.y + other.y, this.z + other.z);
+    public Point3D add(Vector other) {
+        if (other instanceof Point3D p) {
+            return add(p);
+        }
+        return null;
+    }
+
+    public Point3D add(Point3D p) {
+        return new Point3D(this.x + p.x, this.y + p.y, this.z + p.z);
     }
 
     @Override
@@ -14,35 +27,32 @@ public record Point3D(int x, int y, int z) implements Vector3D<Point3D>, Point<P
     }
 
     @Override
-    public double dot(Point3D other) {
-        return this.x * other.x + this.y * other.y + this.z * other.z;
+    public double dot(Vector other) {
+        if (other instanceof Point3D p) {
+            return dot(p);
+        }
+        return 0;
     }
 
     @Override
-    public int getComponent(int axis) {
-        return switch (axis) {
-            case 0 -> x;
-            case 1 -> y;
-            case 2 -> z;
-            default -> throw new RuntimeException("Tried to get invalid axis index " + axis + " from a Point3D.");
-        };
-    }
-
-    public static Point3D of(int... components) {
-        if (components.length == 0) {
-            return origin();
-        } else if (components.length == 3) {
-            return of(components[0], components[1], components[2]);
-        } else {
-            return null;
+    public Point3D subtract(Vector other) {
+        if (other instanceof Point3D p) {
+            return subtract(p);
         }
+        return null;
     }
 
-    public static Point3D of(int x, int y, int z) {
-        return new Point3D(x, y, z);
+    public Point3D subtract(Point3D p) {
+        return new Point3D(this.x - p.x, this.y - p.y, this.z - p.z);
     }
 
-    public static Point3D origin() {
-        return of(0, 0, 0);
+
+    public double dot(Point3D p) {
+        return this.x * p.x + this.y * p.y + this.z * p.z;
+    }
+
+    @Override
+    public Point3D apply(Point3D target) {
+        return add(target);
     }
 }

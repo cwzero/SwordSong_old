@@ -1,21 +1,13 @@
 package com.liquidforte.song.math.geometry;
 
-import java.util.function.BiFunction;
+public interface VectorOperations<V extends Vector> {
+    VectorOperation<V, V, V> add();
 
-public interface VectorOperations<V extends Vector<V>> {
-    default BiFunction<V, V, V> add() {
-        return Vector::add;
-    }
+    VectorOperation<V, Double, V> scale();
 
-    default BiFunction<V, Double, V> scale() {
-        return Vector::scale;
-    }
+    VectorOperation<V, V, Double> dot();
 
-    default BiFunction<V, V, Double> dot() {
-        return Vector::dot;
-    }
-
-    default BiFunction<V, V, V> subtract() {
-        return Vector::subtract;
+    default VectorOperation<V, V, V> subtract() {
+        return (a, b) -> add().apply(a, scale().apply(b, -1.0));
     }
 }

@@ -2,9 +2,21 @@ package com.liquidforte.song.math.geometry.two;
 
 import com.liquidforte.song.math.geometry.Offset;
 import com.liquidforte.song.math.geometry.Point;
+import com.liquidforte.song.math.geometry.Vector;
 
-public record Point2D(int x, int y) implements Vector2D<Point2D>, Point<Point2D>, Offset<Point2D> {
+public record Point2D(int x, int y) implements Vector2D, Point, Offset<Point2D> {
+    public Point2D(Point2D other) {
+        this(other.x, other.y);
+    }
+
     @Override
+    public Point2D add(Vector other) {
+        if (other instanceof Point2D p) {
+            return add(p);
+        }
+        return null;
+    }
+
     public Point2D add(Point2D other) {
         return new Point2D(this.x + other.x, this.y + other.y);
     }
@@ -15,42 +27,31 @@ public record Point2D(int x, int y) implements Vector2D<Point2D>, Point<Point2D>
     }
 
     @Override
-    public double dot(Point2D other) {
-        return this.x * other.x + this.y * other.y;
-    }
-
-    @Override
-    public int getComponent(int axis) {
-        return switch (axis) {
-            case 0 -> x;
-            case 1 -> y;
-            default -> throw new RuntimeException("Tried to get invalid axis index " + axis + " from a Point2D.");
-        };
-    }
-
-    public static Point2D of(int... components) {
-        if (components.length == 0) {
-            return origin();
-        } else if (components.length == 2) {
-            return of(components[0], components[1]);
+    public Point2D subtract(Vector other) {
+        if (other instanceof Point2D p) {
+            return subtract(p);
         }
         return null;
     }
 
-    public static Point2D of(Point2D other) {
-        return of(other.x, other.y);
-    }
-
-    public static Point2D of(int x, int y) {
-        return new Point2D(x, y);
-    }
-
-    public static Point2D origin() {
-        return of(0, 0);
+    public Point2D subtract(Point2D p) {
+        return new Point2D(this.x - p.x, this.y - p.y);
     }
 
     @Override
-    public Point2D getOffset() {
-        return this;
+    public double dot(Vector other) {
+        if (other instanceof Point2D p) {
+            return dot(p);
+        }
+        return 0;
+    }
+
+    public double dot(Point2D p) {
+        return this.x * p.x + this.x * p.y;
+    }
+
+    @Override
+    public Point2D apply(Point2D target) {
+        return new Point2D(target.x + this.x, target.y + this.y);
     }
 }

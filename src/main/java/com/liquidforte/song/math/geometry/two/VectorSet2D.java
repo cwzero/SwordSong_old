@@ -2,19 +2,8 @@ package com.liquidforte.song.math.geometry.two;
 
 import com.liquidforte.song.math.geometry.VectorSet;
 
-public interface VectorSet2D<S extends VectorSet2D<S, V>, V extends Vector2D<V>> extends VectorSet<S, V> {
-    @Override
-    default V getOrigin() {
-        return construct(0, 0);
-    }
+public interface VectorSet2D<V extends Vector2D> extends VectorSet<V> {
+    VectorSet2D<V> offset(int x, int y);
 
-    @Override
-    default V construct(V v) {
-        return construct(v.getComponent(0), v.getComponent(1));
-    }
-
-    @Override
-    default int getDimensions() {
-        return 2;
-    }
+    VectorSet2D<V> constrain(int width, int height);
 }

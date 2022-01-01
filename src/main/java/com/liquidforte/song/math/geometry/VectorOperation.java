@@ -1,8 +1,8 @@
 package com.liquidforte.song.math.geometry;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 @FunctionalInterface
-public interface VectorOperation< V extends Vector<V>> extends Function<V, V> {
-    V apply(V v);
+public interface VectorOperation<V extends Vector, I, O> extends BiFunction<V, I, O> {
+
 }

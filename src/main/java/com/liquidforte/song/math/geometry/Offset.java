@@ -1,11 +1,8 @@
 package com.liquidforte.song.math.geometry;
 
-@FunctionalInterface
-public interface Offset<V extends Vector<V>> extends VectorOperation<V> {
-    V getOffset();
+import java.util.function.Function;
 
-    @Override
-    default V apply(V v) {
-        return v.add(getOffset());
-    }
+@FunctionalInterface
+public interface Offset<V extends Vector> extends Function<V, V> {
+
 }

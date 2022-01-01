@@ -1,22 +1,32 @@
 package com.liquidforte.song.grid;
 
 import com.liquidforte.song.collect.Map;
+import com.liquidforte.song.event.EventSource;
+import com.liquidforte.song.math.geometry.Constrain;
+import com.liquidforte.song.math.geometry.Offset;
 import com.liquidforte.song.math.geometry.Point;
 import com.liquidforte.song.math.geometry.PointSet;
+
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 // TODO: write our own map interface - partially done already with source/dest and pointers
 // TODO: do any of source/dest and pointers need to be tweaked for the vector library?
 // TODO: when we call get, set, the grid calls construct with the passed in point
-public interface Grid<G extends Grid<G, P, V>, P extends Point<P>, V> extends Map<P, V>, PointSet<G, P> {
-    default V setValue(int[] components, V v) {
-        return setValue(construct(components), v);
+public interface Grid<P extends Point, V> extends EventSource, Map<P, V>, PointSet<P> {
+    @Override
+    Grid<P, V> map(Function<P, P> mapFn);
+
+    @Override
+    default Grid<P, V> offset(Offset<P> offset) {
+        return map(offset);
     }
 
-    default V setValue(V v, int... components) {
-        return setValue(components, v);
-    }
+    @Override
+    Grid<P, V> filter(Predicate<P> filterFn);
 
-    default V getValue(int... components) {
-        return getValue(construct(components));
+    @Override
+    default Grid<P, V> constrain(Constrain<P> constrain) {
+        return filter(constrain);
     }
 }

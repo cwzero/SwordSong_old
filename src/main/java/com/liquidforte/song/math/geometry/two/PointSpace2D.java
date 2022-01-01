@@ -1,42 +1,26 @@
 package com.liquidforte.song.math.geometry.two;
 
 import com.liquidforte.song.math.geometry.PointSpace;
+import com.liquidforte.song.math.geometry.VectorSetOperation;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class PointSpace2D implements PointSet2D<PointSpace2D>, VectorSpace2D<PointSpace2D, Point2D>, PointSpace<PointSpace2D, Point2D> {
-    public static final PointSpace2D INSTANCE = new PointSpace2D();
-
-    private PointSpace2D() {
+@FunctionalInterface
+public interface PointSpace2D extends PointSet2D, VectorSpace2D<Point2D, PointSet2D>, PointSpace<Point2D, PointSet2D> {
+    @Override
+    default VectorSetOperation<Point2D, PointSet2D, Function<Point2D, Point2D>> map() {
+        return (set, mapFn) -> input -> this.construct(mapFn.apply(input));
     }
 
     @Override
-    public Point2D construct(int... components) {
-        return Point2D.of(components);
-    }
-
-    @Override
-    public PointSpace2D map(Function<Point2D, Point2D> mapFn) {
-        return new PointSpace2D() {
-            @Override
-            public Point2D construct(int... components) {
-                return mapFn.apply(super.construct(components));
+    default VectorSetOperation<Point2D, PointSet2D, Predicate<Point2D>> filter() {
+        return (set, filterFn) -> input -> {
+            var p = this.construct(input);
+            if (filterFn.test(p)) {
+                return p;
             }
-        };
-    }
-
-    @Override
-    public PointSpace2D filter(Predicate<Point2D> filterFn) {
-        return new PointSpace2D() {
-            @Override
-            public Point2D construct(int... components) {
-                Point2D p = super.construct(components);
-                if (filterFn.test(p)) {
-                    return p;
-                }
-                return null;
-            }
+            return null;
         };
     }
 }

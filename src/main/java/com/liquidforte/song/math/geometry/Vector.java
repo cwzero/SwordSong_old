@@ -1,18 +1,11 @@
 package com.liquidforte.song.math.geometry;
 
-@SuppressWarnings("unchecked")
-public interface Vector<V extends Vector<V>> {
-    V add(V other);
+public interface Vector {
+    Vector add(Vector other);
 
-    V scale(double scalar);
+    Vector scale(double scalar);
 
-    double dot(V other);
+    double dot(Vector other);
 
-    default V subtract(V other) {
-        return add(scale(-1));
-    }
-
-    int getComponent(int axis);
-
-    int getDimensions();
+    Vector subtract(Vector other);
 }
