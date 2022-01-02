@@ -5,8 +5,8 @@ import com.liquidforte.song.util.TileUtil;
 
 import java.awt.image.BufferedImage;
 
-public record BasicTile(char tile) implements CharTile {
-    public BasicTile(byte tile) {
+public record BasicCharTile(char tile) implements CharTile {
+    public BasicCharTile(byte tile) {
         this(TileUtil.decodeTile(tile));
     }
 
@@ -18,5 +18,10 @@ public record BasicTile(char tile) implements CharTile {
     @Override
     public BufferedImage getTexture() {
         return TextureUtil.getTexture(tile);
+    }
+
+    @Override
+    public boolean isSolid() {
+        return false;
     }
 }

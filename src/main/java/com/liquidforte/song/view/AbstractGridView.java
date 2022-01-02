@@ -23,7 +23,7 @@ public abstract class AbstractGridView extends AbstractTileGrid2D implements Gri
             if (event instanceof GridEvent3D e) {
                 Point3D location = getViewTarget().construct(e.getLocation());
                 if (location.z() == 0) {
-                    Point2D viewLocation = construct(location.x(), location.y());
+                    Point2D viewLocation = construct(new Point2D(location.x(), location.y()));
                     fireEvent(new GridEvent2D<>(this, viewLocation, (Tile) e.getOldValue(), (Tile) e.getNewValue()));
                 }
             }
@@ -42,9 +42,10 @@ public abstract class AbstractGridView extends AbstractTileGrid2D implements Gri
     }
 
     @Override
-    protected Tile doGetValue(Point2D p) {
-        Point2D target = construct(p);
+    protected Tile doGetValue(Point2D target) {
+        if (target == null) return null;
         Point3D sTarget = getViewTarget().construct(target.x(), target.y(), 0);
+        if (sTarget == null) return null;
         return getSource().getValue(sTarget);
     }
 
@@ -62,5 +63,10 @@ public abstract class AbstractGridView extends AbstractTileGrid2D implements Gri
 
     protected void setViewTarget(PointSet3D viewTarget) {
         this.viewTarget = viewTarget;
+    }
+
+    @Override
+    public void moveTo(Point3D target) {
+        setViewTarget(Point3D.space.map(target));
     }
 }

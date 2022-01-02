@@ -1,5 +1,7 @@
 package com.liquidforte.song.tilegrid.two;
 
+import com.liquidforte.song.event.EventListener;
+import com.liquidforte.song.grid.event.GridEvent2D;
 import com.liquidforte.song.grid.two.AbstractGrid2D;
 import com.liquidforte.song.math.geometry.two.Point2D;
 import com.liquidforte.song.math.geometry.two.PointSet2D;
@@ -20,14 +22,40 @@ public abstract class AbstractTileGrid2D extends AbstractGrid2D<Tile> implements
     @Override
     public TileGrid2D map(Function<Point2D, Point2D> mapFn) {
         var result = new DelegateTileGrid2D(this, Point2D.space.map(mapFn));
-        addListener(result::fireEvent);
+        addListener(new EventListener() {
+            @Override
+            public void handleEvent(Object event) {
+                result.fireEvent(event);
+            }
+
+            @Override
+            public boolean filterEvent(Object event) {
+                if (event instanceof GridEvent2D e) {
+                    return result.construct(e.getLocation()) != null;
+                }
+                return false;
+            }
+        });
         return result;
     }
 
     @Override
     public TileGrid2D filter(Predicate<Point2D> filterFn) {
         var result = new DelegateTileGrid2D(this, Point2D.space.filter(filterFn));
-        addListener(result::fireEvent);
+        addListener(new EventListener() {
+            @Override
+            public void handleEvent(Object event) {
+                result.fireEvent(event);
+            }
+
+            @Override
+            public boolean filterEvent(Object event) {
+                if (event instanceof GridEvent2D e) {
+                    return result.construct(e.getLocation()) != null;
+                }
+                return false;
+            }
+        });
         return result;
     }
 }

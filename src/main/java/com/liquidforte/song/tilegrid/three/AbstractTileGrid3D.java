@@ -1,5 +1,6 @@
 package com.liquidforte.song.tilegrid.three;
 
+import com.liquidforte.song.event.EventListener;
 import com.liquidforte.song.grid.event.GridEvent2D;
 import com.liquidforte.song.grid.event.GridEvent3D;
 import com.liquidforte.song.grid.three.AbstractGrid3D;
@@ -24,15 +25,41 @@ public abstract class AbstractTileGrid3D extends AbstractGrid3D<Tile> implements
 
     @Override
     public TileGrid3D map(Function<Point3D, Point3D> mapFn) {
-        var result = new DelegateTileGrid3D(space.map(mapFn));
-        addListener(result::fireEvent);
+        var result = new DelegateTileGrid3D(this, space.map(mapFn));
+        addListener(new EventListener() {
+            @Override
+            public void handleEvent(Object event) {
+                result.fireEvent(event);
+            }
+
+            @Override
+            public boolean filterEvent(Object event) {
+                if (event instanceof GridEvent3D e) {
+                    return result.construct(e.getLocation()) != null;
+                }
+                return false;
+            }
+        });
         return result;
     }
 
     @Override
     public TileGrid3D filter(Predicate<Point3D> filterFn) {
-        var result = new DelegateTileGrid3D(space.filter(filterFn));
-        addListener(result::fireEvent);
+        var result = new DelegateTileGrid3D(this, space.filter(filterFn));
+        addListener(new EventListener() {
+            @Override
+            public void handleEvent(Object event) {
+                result.fireEvent(event);
+            }
+
+            @Override
+            public boolean filterEvent(Object event) {
+                if (event instanceof GridEvent3D e) {
+                    return result.construct(e.getLocation()) != null;
+                }
+                return false;
+            }
+        });
         return result;
     }
 
@@ -49,37 +76,22 @@ public abstract class AbstractTileGrid3D extends AbstractGrid3D<Tile> implements
                 return AbstractTileGrid3D.this.getValue(new Point3D(point2D.x(), point2D.y(), z));
             }
         };
-        addListener(event -> {
-            if (event instanceof GridEvent3D e) {
-                result.fireEvent(new GridEvent2D<>(result, new Point2D(e.getLocation().x(), e.getLocation().y()), (Tile)e.getOldValue(), (Tile)e.getNewValue()));
+        addListener(new EventListener() {
+            @Override
+            public void handleEvent(Object event) {
+                if (event instanceof GridEvent3D e) {
+                    result.fireEvent(new GridEvent2D<>(result, new Point2D(e.getLocation().x(), e.getLocation().y()), (Tile)e.getOldValue(), (Tile)e.getNewValue()));
+                }
+            }
+
+            @Override
+            public boolean filterEvent(Object event) {
+                if (event instanceof GridEvent3D e) {
+                    return result.construct(e.getLocation().x(), e.getLocation().y()) != null;
+                }
+                return false;
             }
         });
         return result;
-    }
-
-    protected class DelegateTileGrid3D extends AbstractTileGrid3D {
-        public DelegateTileGrid3D(PointSet3D space) {
-            super(space);
-        }
-
-        @Override
-        public Tile setValue(Point3D p, Tile tile) {
-            return AbstractTileGrid3D.this.setValue(construct(p), tile);
-        }
-
-        @Override
-        protected Tile doSetValue(Point3D p, Tile tile) {
-            return AbstractTileGrid3D.this.setValue(p, tile);
-        }
-
-        @Override
-        public Tile getValue(Point3D p) {
-            return AbstractTileGrid3D.this.getValue(construct(p));
-        }
-
-        @Override
-        protected Tile doGetValue(Point3D p) {
-            return AbstractTileGrid3D.this.getValue(p);
-        }
     }
 }

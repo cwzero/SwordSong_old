@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TextureUtil {
-    private static final String DEFAULT_SET = "16x16-RogueYun-AgmEdit";
+    private static final String DEFAULT_SET = "16x16-sb-ascii";
 
     private static final Map<String, TileSet> sets = new HashMap<>();
 
