@@ -3,26 +3,41 @@ package com.liquidforte.song.tile;
 import java.awt.*;
 
 public class StackTile extends AbstractTile {
-    private AbstractTile tile = null;
+    private AbstractTile foreground = null;
+    private AbstractTile background = null;
 
-    public AbstractTile getTile() {
-        return tile;
+    public AbstractTile getForeground() {
+        return foreground;
     }
 
-    public void setTile(AbstractTile tile) {
-        this.tile = tile;
+    public void setForeground(AbstractTile foreground) {
+        this.foreground = foreground;
+    }
+
+    public AbstractTile getBackground() {
+        return background;
+    }
+
+    public void setBackground(AbstractTile background) {
+        this.background = background;
     }
 
     @Override
     public void draw(Graphics2D graphics, int x, int y) {
-        AbstractTile tile = getTile();
-        if (tile != null) {
-            tile.draw(graphics, x, y);
+        AbstractTile foreground = getForeground();
+        if (foreground != null) {
+            foreground.draw(graphics, x, y);
+        } else {
+            AbstractTile background = getBackground();
+            if (background != null) {
+                background.draw(graphics,x, y);
+            }
         }
     }
 
     @Override
     public boolean isSolid() {
-        return getTile() != null && getTile().isSolid();
+        return (getForeground() != null && getForeground().isSolid()) ||
+                (getBackground() != null && getBackground().isSolid());
     }
 }

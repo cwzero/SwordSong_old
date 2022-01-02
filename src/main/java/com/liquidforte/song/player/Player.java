@@ -39,7 +39,7 @@ public class Player extends AbstractTile {
     public void place(int x, int y, int z) {
         if (canMove(x, y, z)) {
             remove();
-            getTile(x, y, z).setTile(this);
+            getTile(x, y, z).setForeground(this);
             this.x = x;
             this.y = y;
             this.z = z;
@@ -47,8 +47,8 @@ public class Player extends AbstractTile {
     }
 
     public void remove() {
-        if (getTile() != null && getTile().getTile() != null && getTile().getTile().equals(this)) {
-            getTile().setTile(null);
+        if (getTile() != null && getTile().getForeground() != null && getTile().getForeground().equals(this)) {
+            getTile().setForeground(null);
         }
     }
 
