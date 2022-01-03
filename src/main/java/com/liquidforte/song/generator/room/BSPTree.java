@@ -5,8 +5,8 @@ import com.liquidforte.song.world.GameWorldLayer;
 import java.util.Random;
 
 public class BSPTree {
-    private static Random random = new Random();
-    private BSPNode root;
+    private static final Random random = new Random();
+    private final BSPNode root;
     private final int targetWidth = 20, targetHeight = 20;
 
     public BSPTree(GameWorldLayer layer) {
