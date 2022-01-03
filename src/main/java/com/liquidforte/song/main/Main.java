@@ -9,17 +9,23 @@ import com.liquidforte.song.world.GameWorld;
 
 public class Main {
     public static void main(String[] args) {
-        UIContainer container = new UIContainer(101, 57);
+        int width = 101;
+        int height = 57;
+        int depth = 5;
+
+        UIContainer container = new UIContainer(width, height);
         GameWindow window = new GameWindow(container);
         window.start();
 
         Player player = new Player();
         WorldGenerator generator = new WorldGenerator(player);
-        GameWorld world = generator.generate(101, 57, 5);
+        GameWorld world = generator.generate(width, height, depth);
+
         Runnable updateFn = () -> {
             player.getLayer().draw(container.getGraphics());
             window.repaint();
         };
+
         PlayerController controller = new PlayerController(player, updateFn);
         window.addKeyListener(controller);
 
