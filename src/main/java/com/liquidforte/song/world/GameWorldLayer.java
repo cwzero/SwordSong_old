@@ -26,6 +26,13 @@ public class GameWorldLayer {
         return grid[y][x];
     }
 
+    public StackTile create(int x, int y) {
+        if (grid[y][x] == null) {
+            grid[y][x] = new StackTile();
+        }
+        return grid[y][x];
+    }
+
     public void draw(Graphics2D graphics) {
         graphics.setBackground(Color.black);
         graphics.clearRect(0, 0, width * 16, height * 16);

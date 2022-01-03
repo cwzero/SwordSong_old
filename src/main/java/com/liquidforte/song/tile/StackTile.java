@@ -1,5 +1,7 @@
 package com.liquidforte.song.tile;
 
+import com.liquidforte.song.block.RoomBlock;
+
 import java.awt.*;
 
 public class StackTile extends AbstractTile {
@@ -25,13 +27,19 @@ public class StackTile extends AbstractTile {
     @Override
     public void draw(Graphics2D graphics, int x, int y) {
         AbstractTile foreground = getForeground();
+        boolean fore = foreground != null;
+
+        AbstractTile background = getBackground();
+        if (background != null) {
+            if (fore && background instanceof RoomBlock b) {
+                b.smooth().draw(graphics, x, y);
+            } else {
+                background.draw(graphics, x, y);
+            }
+        }
+
         if (foreground != null) {
             foreground.draw(graphics, x, y);
-        } else {
-            AbstractTile background = getBackground();
-            if (background != null) {
-                background.draw(graphics,x, y);
-            }
         }
     }
 
